@@ -204,5 +204,20 @@ namespace SmallTasksCS
             }
             return -1;
         }
+
+        public static string CopyChars(string input, int k)
+        {
+            if (k < 0)
+            {
+                throw new ArgumentException();
+            }
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < k; i++)
+            {
+                sb.Append(input);
+            }
+            return sb.ToString().Trim();
+        }
     }
 }

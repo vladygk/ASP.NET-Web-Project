@@ -390,5 +390,34 @@ namespace TestSmallTasks
             //Assert
             Assert.That(actual, Is.EqualTo(expected));
         }
+        [Test]
+        public void TestCopyCharsWorksCorrectly()
+        {
+            //Arrange
+            string input = "Hello";
+            int k = 3;
+            string exptected = "HelloHelloHello";
+
+            //Act 
+            string actual = SmallTasksFunctions.CopyChars(input, k);
+
+            //Assert
+            Assert.That(actual, Is.EqualTo(exptected));
+
+        }
+
+        [Test]
+        public void TestCopyCharsThrowsExceptionWhenKIsNegative()
+        {
+            //Arrange
+            string input = "Hello";
+            int k = -3;
+
+            //Act + Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                SmallTasksFunctions.CopyChars(input, k);
+            });
+        }
     }
 }
