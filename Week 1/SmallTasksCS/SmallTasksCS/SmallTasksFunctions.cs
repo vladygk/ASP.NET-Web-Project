@@ -242,5 +242,17 @@ namespace SmallTasksCS
                 .Replace("%2F", "/");
             return input;
         }
+        public static int SumOfNumbers(string input)
+        {
+            int total = 0;
+            for (int i = 0;i < input.Length; i++)
+            {
+                if (Char.IsDigit(input[i]))
+                {
+                    total += (int)input[i] - '0';
+                }
+            }
+            return total;
+        }
     }
 }

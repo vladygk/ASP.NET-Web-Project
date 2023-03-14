@@ -449,5 +449,19 @@ namespace TestSmallTasks
             //Assert
             Assert.That(actual,Is.EqualTo(expected));
         }
+
+        [Test]
+        public void TestSumOfNumbersWorksCorrectly()
+        {
+            //Arrange 
+            string input = "1asdsa2dasdsafdsg6";
+            int exptected = 9;
+
+            //Act
+            int actual= SmallTasksFunctions.SumOfNumbers(input);
+
+            //Assert
+            Assert.That(actual, Is.EqualTo(exptected));
+        }
     }
 }
