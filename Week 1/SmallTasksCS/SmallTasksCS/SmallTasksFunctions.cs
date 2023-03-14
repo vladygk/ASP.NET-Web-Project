@@ -1,10 +1,13 @@
-﻿namespace SmallTasksCS
+﻿using System;
+
+namespace SmallTasksCS
 {
     public class SmallTasksFunctions
     {
        internal static void Main(string[] args)
         {
-            
+           
+
         }
 
        public static  bool isOdd(int n) => n % 2 != 0;
@@ -39,5 +42,17 @@
             }
             return array.Min();
         }
+
+    public static int GetOddOccurrence(int[] array)
+        {
+            int oddOccurNum = array.FirstOrDefault(x => (array.Count(n=>n==x) % 2 != 0));
+            if(oddOccurNum == 0&& array.Count(x=>x==0)%2==0)
+            {
+                throw new ArgumentException("No such number");
+            }
+
+            return oddOccurNum;
+        }
+
     }
 }

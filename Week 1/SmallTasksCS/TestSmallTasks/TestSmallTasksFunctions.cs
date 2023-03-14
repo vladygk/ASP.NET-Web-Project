@@ -131,10 +131,38 @@ namespace TestSmallTasks
             //Arrange
             int[] array = new int[] { 1, 2, 3 };
             int k = 5;
+
             //Act + Assert
             Assert.Throws<ArgumentException>(() =>
             {
                 SmallTasksFunctions.KthMin(k, array);
+            });
+        }
+
+        [Test]
+        public void TestGetOddOccurrenceWithCorrectInput()
+        {
+            //Arrange
+            int[] array = { 1, 1, 2 };
+            int expected = 2;
+
+            //Act
+            int actual = SmallTasksFunctions.GetOddOccurrence(array);
+
+            //Assert
+            Assert.That (actual, Is.EqualTo(expected));
+        }
+        [Test]
+        public void TestGetOddOccurrenceShouldThrowErrorIfNoSuchNumber()
+        {
+            //Arrange
+            int[] array = { 1, 1 };
+
+            //Act + Assert
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                SmallTasksFunctions.GetOddOccurrence(array);
             });
         }
     }
