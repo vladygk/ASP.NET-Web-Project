@@ -110,6 +110,32 @@ namespace TestSmallTasks
                SmallTasksFunctions.Min(arr);
            });
         }
+        [Test]
+        public void TestKthMinElementWithCorrectInput()
+        {
+            //Arrange
+            int[] array = new int[] { 5, 4, 3, 2, 1 };
+            int k = 3;
+            int expected = 3;
 
+            // Act 
+            int actual = SmallTasksFunctions.KthMin(k, array);
+
+            //Assert
+            Assert.That(actual,Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void TestKthMinElementWithKBiggerThanArrayLength()
+        {
+            //Arrange
+            int[] array = new int[] { 1, 2, 3 };
+            int k = 5;
+            //Act + Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                SmallTasksFunctions.KthMin(k, array);
+            });
+        }
     }
 }

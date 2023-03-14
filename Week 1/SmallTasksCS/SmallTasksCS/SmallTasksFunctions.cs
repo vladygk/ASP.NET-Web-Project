@@ -26,5 +26,18 @@
         }
 
         public static int Min(int[] arr) => arr.Min();
+
+        public static int KthMin(int k, int[] array)
+        {
+            if (k > array.Length)
+            {
+                throw new ArgumentException();
+            }
+            for (int i = 0; i < k-1; i++) {
+                int min = array.Min();
+                array[Array.IndexOf(array, min)] = int.MaxValue;
+            }
+            return array.Min();
+        }
     }
 }
