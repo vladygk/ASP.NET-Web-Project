@@ -435,5 +435,19 @@ namespace TestSmallTasks
             Assert.That(actual,Is.EqualTo(exptected));
 
         }
+
+        [Test]
+        public void TestDecodeUrlWorksCorrectly()
+        {
+            //Arrange
+            string input = "%3A%20%3D%20%2F";
+            string expected = ": ? /";
+            
+            //Act
+            string actual = SmallTasksFunctions.DecodeUrl(input);
+
+            //Assert
+            Assert.That(actual,Is.EqualTo(expected));
+        }
     }
 }

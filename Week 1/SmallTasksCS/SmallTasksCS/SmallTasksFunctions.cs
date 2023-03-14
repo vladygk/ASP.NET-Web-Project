@@ -232,5 +232,15 @@ namespace SmallTasksCS
             }
             return count;
         }
+
+        public static string DecodeUrl(string input)
+        {
+           input =  input
+                .Replace("%20", " ")
+                .Replace("%3A", ":")
+                .Replace("%3D", "?")
+                .Replace("%2F", "/");
+            return input;
+        }
     }
 }
