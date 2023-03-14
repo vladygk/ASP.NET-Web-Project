@@ -6,7 +6,7 @@ namespace SmallTasksCS
     {
         internal static void Main(string[] args)
         {
-            
+            Console.WriteLine(KthFac(100, 1));
         }
 
         public static bool isOdd(int n) => n % 2 != 0;
@@ -126,6 +126,25 @@ namespace SmallTasksCS
             }
 
             return secondFac;
+        }
+
+        public static long KthFac(int k,int n)
+        { int total = 1;
+            while (k-- > 0)
+            {
+                total = 1;
+                if (n != 0)
+                {
+
+                    for (int i = 1; i <= n; i++)
+                    {
+                        total *= i;
+                    }
+                    n = total;
+                   
+                }
+            }
+            return total;
         }
 
     }

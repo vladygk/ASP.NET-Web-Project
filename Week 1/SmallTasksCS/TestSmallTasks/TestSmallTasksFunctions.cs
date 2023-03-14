@@ -264,5 +264,20 @@ namespace TestSmallTasks
                 SmallTasksFunctions.DoubleFac(n);
             });
         }
+
+        [Test]
+        public void TestKthFacWorksWithCorrectInput()
+        {
+            //Arrange
+            int n = 3;
+            int k = 2;
+            long expected = 720;
+
+            //Act
+            long actual = SmallTasksFunctions.KthFac(k, n);
+
+            //Assert
+            Assert.That(actual,Is.EqualTo(expected));
+        }
     }
 }
