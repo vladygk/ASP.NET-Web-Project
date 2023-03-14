@@ -165,5 +165,19 @@ namespace TestSmallTasks
                 SmallTasksFunctions.GetOddOccurrence(array);
             });
         }
+        [Test]
+        public void TestGetAverageWithCorrectInput()
+        {
+            //Arrange
+            int[] array = { 4, 6, 5 };
+            int expected = 5;
+
+            //Act
+            int actual = SmallTasksFunctions.GetAverage(array);
+
+            //Assert
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 }

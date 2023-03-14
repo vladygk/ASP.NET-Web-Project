@@ -4,13 +4,13 @@ namespace SmallTasksCS
 {
     public class SmallTasksFunctions
     {
-       internal static void Main(string[] args)
+        internal static void Main(string[] args)
         {
-           
+
 
         }
 
-       public static  bool isOdd(int n) => n % 2 != 0;
+        public static bool isOdd(int n) => n % 2 != 0;
 
         public static bool isPrime(int n)
         {
@@ -36,23 +36,26 @@ namespace SmallTasksCS
             {
                 throw new ArgumentException();
             }
-            for (int i = 0; i < k-1; i++) {
+            for (int i = 0; i < k - 1; i++)
+            {
                 int min = array.Min();
                 array[Array.IndexOf(array, min)] = int.MaxValue;
             }
             return array.Min();
         }
 
-    public static int GetOddOccurrence(int[] array)
+        public static int GetOddOccurrence(int[] array)
         {
-            int oddOccurNum = array.FirstOrDefault(x => (array.Count(n=>n==x) % 2 != 0));
-            if(oddOccurNum == 0&& array.Count(x=>x==0)%2==0)
+            int oddOccurNum = array.FirstOrDefault(x => (array.Count(n => n == x) % 2 != 0));
+            if (oddOccurNum == 0 && array.Count(x => x == 0) % 2 == 0)
             {
                 throw new ArgumentException("No such number");
             }
 
             return oddOccurNum;
         }
+
+        public static int GetAverage(int[] array) => array.Sum() / array.Length;
 
     }
 }
