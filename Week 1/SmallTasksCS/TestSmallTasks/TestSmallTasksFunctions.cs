@@ -492,5 +492,19 @@ namespace TestSmallTasks
             Assert.That(actual, Is.False);
 
         }
+
+        [Test]
+        public void TestHasAnagramOfWorksCorrectly()
+        {
+            //Arrange
+            string a = "111vladi222";
+            string b = "idalv";
+
+            //Act
+            bool actual = SmallTasksFunctions.HasAnagramOf(a, b);
+
+            //Assert
+            Assert.That(actual, Is.True);
+        }
     }
 }

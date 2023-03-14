@@ -8,7 +8,7 @@ namespace SmallTasksCS
     {
         internal static void Main(string[] args)
         {
-           
+
         }
 
         public static bool isOdd(int n) => n % 2 != 0;
@@ -58,14 +58,14 @@ namespace SmallTasksCS
 
         public static int GetAverage(int[] array) => array.Sum() / array.Length;
 
-        public static long pow (int a, int b)
+        public static long pow(int a, int b)
         {
             if (b == 0)
             {
                 return 0;
             }
 
-            if(b == 1)
+            if (b == 1)
             {
                 return a;
             }
@@ -85,7 +85,7 @@ namespace SmallTasksCS
                 throw new ArgumentException();
             }
             List<int> input = new List<int>();
-            for (int i = 1; i<= N; i++)
+            for (int i = 1; i <= N; i++)
             {
                 input.Add(i);
             }
@@ -102,7 +102,7 @@ namespace SmallTasksCS
             }
             else
             {
-                return gcd(b, a %b);
+                return gcd(b, a % b);
             }
         }
 
@@ -112,7 +112,7 @@ namespace SmallTasksCS
             {
                 throw new InvalidOperationException();
             }
-            if(n == 0)
+            if (n == 0)
             {
                 return 1;
             }
@@ -130,8 +130,9 @@ namespace SmallTasksCS
             return secondFac;
         }
 
-        public static long KthFac(int k,int n)
-        { int total = 1;
+        public static long KthFac(int k, int n)
+        {
+            int total = 1;
             while (k-- > 0)
             {
                 total = 1;
@@ -143,7 +144,7 @@ namespace SmallTasksCS
                         total *= i;
                     }
                     n = total;
-                   
+
                 }
             }
             return total;
@@ -151,23 +152,23 @@ namespace SmallTasksCS
 
         public static bool EqualSumSides(int[] numbers)
         {
-            for(int i = 0; i < numbers.Length; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
                 int leftSum = 0;
 
-                for (int j = 0; j <=i-1 ; j++)
+                for (int j = 0; j <= i - 1; j++)
                 {
-                    leftSum+= numbers[j];
+                    leftSum += numbers[j];
                 }
 
                 int rightSum = 0;
 
-                for (int j = i+1; j < numbers.Length; j++)
+                for (int j = i + 1; j < numbers.Length; j++)
                 {
                     rightSum += numbers[j];
                 }
 
-                if( leftSum== rightSum)
+                if (leftSum == rightSum)
                 {
                     return true;
                 }
@@ -182,9 +183,9 @@ namespace SmallTasksCS
             StringBuilder sb = new StringBuilder();
             string[] argsArr = arg.Split();
 
-            for(int i = 0;i < argsArr.Length;i++)
+            for (int i = 0; i < argsArr.Length; i++)
             {
-                sb.Append(Reverse(argsArr[i])+" ");
+                sb.Append(Reverse(argsArr[i]) + " ");
             }
             return sb.ToString().Trim();
         }
@@ -195,7 +196,7 @@ namespace SmallTasksCS
 
         public static long GetLargestPalindrome(long N)
         {
-            for (long i = N; i >=0; i--)
+            for (long i = N; i >= 0; i--)
             {
                 if (isPalindrome(i))
                 {
@@ -224,28 +225,28 @@ namespace SmallTasksCS
         {
             int count = 0;
             int index;
-            while ((index = text.IndexOf(word))!=-1)
+            while ((index = text.IndexOf(word)) != -1)
             {
                 count++;
-                text = text.Substring(index+word.Length);
-            
+                text = text.Substring(index + word.Length);
+
             }
             return count;
         }
 
         public static string DecodeUrl(string input)
         {
-           input =  input
-                .Replace("%20", " ")
-                .Replace("%3A", ":")
-                .Replace("%3D", "?")
-                .Replace("%2F", "/");
+            input = input
+                 .Replace("%20", " ")
+                 .Replace("%3A", ":")
+                 .Replace("%3D", "?")
+                 .Replace("%2F", "/");
             return input;
         }
         public static int SumOfNumbers(string input)
         {
             int total = 0;
-            for (int i = 0;i < input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
                 if (Char.IsDigit(input[i]))
                 {
@@ -261,6 +262,19 @@ namespace SmallTasksCS
             HashSet<char> setB = new HashSet<char>(b.ToCharArray());
 
             return setA.SetEquals(setB);
+        }
+
+        public static bool HasAnagramOf(string a, string b)
+        {
+            for (int i = 0; i < a.Length - b.Length; i++)
+            {
+                string currentSubstring = a.Substring(i, b.Length);
+                if (Anagram(currentSubstring, b))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
