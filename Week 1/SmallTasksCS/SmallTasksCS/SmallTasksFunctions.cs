@@ -57,5 +57,25 @@ namespace SmallTasksCS
 
         public static int GetAverage(int[] array) => array.Sum() / array.Length;
 
+        public static long pow (int a, int b)
+        {
+            if (b == 0)
+            {
+                return 0;
+            }
+
+            if(b == 1)
+            {
+                return a;
+            }
+
+            if (b < 0)
+            {
+                a = 1 / a;
+                b = -b;
+            }
+            return a * pow(a, b - 1);
+        }
+
     }
 }

@@ -179,5 +179,23 @@ namespace TestSmallTasks
 
             Assert.That(actual, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void TestPowWithCorrectInput()
+        {
+            //Arrange 
+            int a = 5;
+            int b = 2;
+            long expected = 25;
+
+            //Act 
+
+            long actual = SmallTasksFunctions.pow(a, b);
+
+            //Assert
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+  
     }
 }
