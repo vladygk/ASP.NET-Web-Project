@@ -419,5 +419,21 @@ namespace TestSmallTasks
                 SmallTasksFunctions.CopyChars(input, k);
             });
         }
+
+        [Test]
+        public void TestMentionsWorksCorrectly()
+        {
+            //Arrange
+            string text = "HelloHellodsadsaHello";
+            string word = "Hello";
+            int exptected = 3;
+
+            //Act
+            int actual = SmallTasksFunctions.Mentions(word, text);
+
+            //Assert
+            Assert.That(actual,Is.EqualTo(exptected));
+
+        }
     }
 }

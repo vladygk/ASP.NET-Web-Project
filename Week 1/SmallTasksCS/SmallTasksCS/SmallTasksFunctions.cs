@@ -219,5 +219,18 @@ namespace SmallTasksCS
             }
             return sb.ToString().Trim();
         }
+
+        public static int Mentions(string word, string text)
+        {
+            int count = 0;
+            int index;
+            while ((index = text.IndexOf(word))!=-1)
+            {
+                count++;
+                text = text.Substring(index+word.Length);
+            
+            }
+            return count;
+        }
     }
 }
