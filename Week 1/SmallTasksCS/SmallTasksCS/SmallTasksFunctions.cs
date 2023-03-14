@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 
 namespace SmallTasksCS
 {
@@ -6,8 +6,7 @@ namespace SmallTasksCS
     {
         internal static void Main(string[] args)
         {
-
-
+            
         }
 
         public static bool isOdd(int n) => n % 2 != 0;
@@ -75,6 +74,34 @@ namespace SmallTasksCS
                 b = -b;
             }
             return a * pow(a, b - 1);
+        }
+
+        public static long GetSmallestMultiple(int N)
+        {
+            if (N < 1)
+            {
+                throw new ArgumentException();
+            }
+            List<int> input = new List<int>();
+            for (int i = 1; i<= N; i++)
+            {
+                input.Add(i);
+            }
+
+            return input.Aggregate((S, val) => S * val / gcd(S, val));
+
+        }
+
+        public static int gcd(int a, int b)
+        {
+            if (b == 0)
+            {
+                return a;
+            }
+            else
+            {
+                return gcd(b, a %b);
+            }
         }
 
     }

@@ -122,7 +122,7 @@ namespace TestSmallTasks
             int actual = SmallTasksFunctions.KthMin(k, array);
 
             //Assert
-            Assert.That(actual,Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace TestSmallTasks
             int actual = SmallTasksFunctions.GetOddOccurrence(array);
 
             //Assert
-            Assert.That (actual, Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
         [Test]
         public void TestGetOddOccurrenceShouldThrowErrorIfNoSuchNumber()
@@ -196,6 +196,34 @@ namespace TestSmallTasks
 
             Assert.That(actual, Is.EqualTo(expected));
         }
-  
+
+        [Test]
+        public void TestGetSmallestMultipleWithCorrectInput()
+        {
+            //Arrange 
+            int N = 7;
+            long expected = 420;
+
+            //Act
+
+            long actual = SmallTasksFunctions.GetSmallestMultiple(N);
+
+            //Assert
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+        [Test]
+        public void TestGetSmallestMultipleWithZeroInputThrowsException()
+        {
+            //Arrange
+            int N = 0;
+
+            //Act + Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                SmallTasksFunctions.GetSmallestMultiple(N);
+            });
+        }
+
     }
 }
