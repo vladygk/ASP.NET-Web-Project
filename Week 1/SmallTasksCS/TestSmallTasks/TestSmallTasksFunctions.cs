@@ -305,5 +305,33 @@ namespace TestSmallTasks
             //Assert
             Assert.That(actual, Is.False);
         }
+
+        [Test]
+        public void TestReverseWithCorrectInput()
+        {
+            //Arrange
+            string input = "Vladi";
+            string expected = "idalV";
+
+            //Act
+            string actual = SmallTasksFunctions.Reverse(input);
+
+            //Assert
+            Assert.That(actual,Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void TestReverseWithEmptyInput()
+        {
+            //Arrange
+            string input = "";
+            string expected = "";
+
+            //Act
+            string actual = SmallTasksFunctions.Reverse(input);
+
+            //Assert
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 }

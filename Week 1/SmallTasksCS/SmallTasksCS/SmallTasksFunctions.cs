@@ -174,5 +174,8 @@ namespace SmallTasksCS
             return false;
         }
 
+        public static string Reverse(string argument) => new string(argument.ToCharArray().Reverse().ToArray());
+
+
     }
 }
