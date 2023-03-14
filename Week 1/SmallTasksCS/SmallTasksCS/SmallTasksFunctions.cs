@@ -254,5 +254,13 @@ namespace SmallTasksCS
             }
             return total;
         }
+
+        public static bool Anagram(string a, string b)
+        {
+            HashSet<char> setA = new HashSet<char>(a.ToCharArray());
+            HashSet<char> setB = new HashSet<char>(b.ToCharArray());
+
+            return setA.SetEquals(setB);
+        }
     }
 }

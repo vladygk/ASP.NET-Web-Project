@@ -463,5 +463,34 @@ namespace TestSmallTasks
             //Assert
             Assert.That(actual, Is.EqualTo(exptected));
         }
+        [Test]
+        public void TestAnagramWithTrueValues()
+        {
+            //Arrange
+            string a = "abba";
+            string b = "baba";
+
+            //Act
+            bool actual  = SmallTasksFunctions.Anagram(a, b);
+
+            //Assert
+            Assert.That(actual , Is.True);
+
+        }
+
+        [Test]
+        public void TestAnagramWithFalseValues()
+        {
+            //Arrange
+            string a = "asd";
+            string b = "asdf";
+
+            //Act
+            bool actual = SmallTasksFunctions.Anagram(a, b);
+
+            //Assert
+            Assert.That(actual, Is.False);
+
+        }
     }
 }
