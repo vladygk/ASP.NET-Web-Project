@@ -104,5 +104,29 @@ namespace SmallTasksCS
             }
         }
 
+        public static long DoubleFac(int n)
+        {
+            if (n < 0)
+            {
+                throw new InvalidOperationException();
+            }
+            if(n == 0)
+            {
+                return 1;
+            }
+            long firstFac = 1;
+            long secondFac = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                firstFac *= i;
+            }
+            for (int i = 1; i <= firstFac; i++)
+            {
+                secondFac *= i;
+            }
+
+            return secondFac;
+        }
+
     }
 }

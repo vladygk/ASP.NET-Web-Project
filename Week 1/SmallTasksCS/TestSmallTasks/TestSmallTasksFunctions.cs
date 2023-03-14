@@ -224,6 +224,45 @@ namespace TestSmallTasks
                 SmallTasksFunctions.GetSmallestMultiple(N);
             });
         }
+        [Test]
+        public void TestDoubleFacWorksWithPositiveNumber()
+        {
+            // Arrange
+            int n = 3;
+            long expected = 720;
 
+            // Act 
+            long actual = SmallTasksFunctions.DoubleFac(n);
+
+            //Assert
+            Assert.That(actual,Is.EqualTo(expected));
+        }
+        [Test]
+        public void TestDoubleFacWorksWithZero()
+        {
+            // Arrange
+            int n = 0;
+            long expected = 1;
+
+            // Act 
+            long actual = SmallTasksFunctions.DoubleFac(n);
+
+            //Assert
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+        [Test]
+        public void TestDoubleFacThrowsEceptionWithNegativeNumber()
+        {
+            // Arrange
+            int n = -3;
+
+
+            // Act + Assert
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                SmallTasksFunctions.DoubleFac(n);
+            });
+        }
     }
 }
