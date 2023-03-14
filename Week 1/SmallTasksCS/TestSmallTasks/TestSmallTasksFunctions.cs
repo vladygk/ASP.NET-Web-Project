@@ -235,7 +235,7 @@ namespace TestSmallTasks
             long actual = SmallTasksFunctions.DoubleFac(n);
 
             //Assert
-            Assert.That(actual,Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
         [Test]
         public void TestDoubleFacWorksWithZero()
@@ -277,7 +277,33 @@ namespace TestSmallTasks
             long actual = SmallTasksFunctions.KthFac(k, n);
 
             //Assert
-            Assert.That(actual,Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void TestEqualSumSidesWithExpectedOutputTrue()
+        {
+            //Arrange
+            int[] array = { 6, 2, 2,4 };
+            
+            //Act 
+            bool actual = SmallTasksFunctions.EqualSumSides(array);
+
+            //Assert
+            Assert.That(actual, Is.True);
+        }
+
+        [Test]
+        public void TestEqualSumSidesWithExpectedOutputFalse()
+        {
+            //Arrange
+            int[] array = { 6, 2, 2};
+
+            //Act 
+            bool actual = SmallTasksFunctions.EqualSumSides(array);
+
+            //Assert
+            Assert.That(actual, Is.False);
         }
     }
 }

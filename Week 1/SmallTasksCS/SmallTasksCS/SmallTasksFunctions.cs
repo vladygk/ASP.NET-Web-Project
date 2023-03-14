@@ -6,7 +6,8 @@ namespace SmallTasksCS
     {
         internal static void Main(string[] args)
         {
-            Console.WriteLine(KthFac(100, 1));
+            int[] arr = { 6, 2, 2, 4 };
+            EqualSumSides(arr);
         }
 
         public static bool isOdd(int n) => n % 2 != 0;
@@ -145,6 +146,32 @@ namespace SmallTasksCS
                 }
             }
             return total;
+        }
+
+        public static bool EqualSumSides(int[] numbers)
+        {
+            for(int i = 0; i < numbers.Length; i++)
+            {
+                int leftSum = 0;
+
+                for (int j = 0; j <=i-1 ; j++)
+                {
+                    leftSum+= numbers[j];
+                }
+
+                int rightSum = 0;
+
+                for (int j = i+1; j < numbers.Length; j++)
+                {
+                    rightSum += numbers[j];
+                }
+
+                if( leftSum== rightSum)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
