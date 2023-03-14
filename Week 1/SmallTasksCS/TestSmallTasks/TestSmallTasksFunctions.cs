@@ -333,5 +333,19 @@ namespace TestSmallTasks
             //Assert
             Assert.That(actual, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void TestReverseEveryWordWorksCorrectly()
+        {
+            //Arrange
+            string input = "hello world";
+            string expected = "olleh dlrow";
+
+            //Act
+            string actual = SmallTasksFunctions.ReverseEveryWord(input);
+
+            //Assert
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿
 
+using System.Text;
+
 namespace SmallTasksCS
 {
     public class SmallTasksFunctions
@@ -176,6 +178,16 @@ namespace SmallTasksCS
 
         public static string Reverse(string argument) => new string(argument.ToCharArray().Reverse().ToArray());
 
+        public static string ReverseEveryWord(string arg)
+        {
+            StringBuilder sb = new StringBuilder();
+            string[] argsArr = arg.Split();
 
+            for(int i = 0;i < argsArr.Length;i++)
+            {
+                sb.Append(Reverse(argsArr[i])+" ");
+            }
+            return sb.ToString().Trim();
+        }
     }
 }
