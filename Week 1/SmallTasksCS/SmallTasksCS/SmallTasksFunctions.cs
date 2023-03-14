@@ -8,8 +8,7 @@ namespace SmallTasksCS
     {
         internal static void Main(string[] args)
         {
-            int[] arr = { 6, 2, 2, 4 };
-            EqualSumSides(arr);
+           
         }
 
         public static bool isOdd(int n) => n % 2 != 0;
@@ -189,5 +188,11 @@ namespace SmallTasksCS
             }
             return sb.ToString().Trim();
         }
+
+        public static bool isPalindrome(string argument) => argument == Reverse(argument);
+
+        public static bool isPalindrome(int argument) => argument.ToString() == Reverse(argument.ToString());
+
+
     }
 }

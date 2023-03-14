@@ -347,5 +347,33 @@ namespace TestSmallTasks
             //Assert
             Assert.That(actual, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void TestIsPalindromeStringWorksCorrectly()
+        {
+            //Arrange
+            string input = "loool";
+            
+
+            //Act
+            bool actual = SmallTasksFunctions.isPalindrome(input);
+
+            //Assert
+            Assert.That(actual, Is.True);
+        }
+
+        [Test]
+        public void TestIsPalindromeIntWorksCorrectly()
+        {
+            //Arrange
+            int input = 1001;
+
+
+            //Act
+            bool actual = SmallTasksFunctions.isPalindrome(input);
+
+            //Assert
+            Assert.That(actual, Is.True);
+        }
     }
 }
