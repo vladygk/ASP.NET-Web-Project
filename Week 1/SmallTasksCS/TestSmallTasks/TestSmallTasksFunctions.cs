@@ -284,8 +284,8 @@ namespace TestSmallTasks
         public void TestEqualSumSidesWithExpectedOutputTrue()
         {
             //Arrange
-            int[] array = { 6, 2, 2,4 };
-            
+            int[] array = { 6, 2, 2, 4 };
+
             //Act 
             bool actual = SmallTasksFunctions.EqualSumSides(array);
 
@@ -297,7 +297,7 @@ namespace TestSmallTasks
         public void TestEqualSumSidesWithExpectedOutputFalse()
         {
             //Arrange
-            int[] array = { 6, 2, 2};
+            int[] array = { 6, 2, 2 };
 
             //Act 
             bool actual = SmallTasksFunctions.EqualSumSides(array);
@@ -317,7 +317,7 @@ namespace TestSmallTasks
             string actual = SmallTasksFunctions.Reverse(input);
 
             //Assert
-            Assert.That(actual,Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -353,7 +353,7 @@ namespace TestSmallTasks
         {
             //Arrange
             string input = "loool";
-            
+
 
             //Act
             bool actual = SmallTasksFunctions.isPalindrome(input);
@@ -374,6 +374,21 @@ namespace TestSmallTasks
 
             //Assert
             Assert.That(actual, Is.True);
+        }
+
+        [Test]
+        public void TestGetLargestPalindromeWorksCorrectly()
+        {
+            //Arrange
+            long N = 1010;
+            long expected = 1001;
+
+
+            //Act
+            long actual = SmallTasksFunctions.GetLargestPalindrome(N);
+
+            //Assert
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

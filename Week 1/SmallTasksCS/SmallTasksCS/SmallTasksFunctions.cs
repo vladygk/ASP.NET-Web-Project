@@ -191,8 +191,18 @@ namespace SmallTasksCS
 
         public static bool isPalindrome(string argument) => argument == Reverse(argument);
 
-        public static bool isPalindrome(int argument) => argument.ToString() == Reverse(argument.ToString());
+        public static bool isPalindrome(long argument) => argument.ToString() == Reverse(argument.ToString());
 
-
+        public static long GetLargestPalindrome(long N)
+        {
+            for (long i = N; i >=0; i--)
+            {
+                if (isPalindrome(i))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
 }
