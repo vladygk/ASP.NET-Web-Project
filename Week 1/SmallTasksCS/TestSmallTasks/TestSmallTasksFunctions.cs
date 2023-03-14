@@ -81,6 +81,35 @@ namespace TestSmallTasks
 
             Assert.That(actual, Is.EqualTo(exptected));
         }
-       
+
+
+        [Test]
+        public void TestMinWithCorrectInput()
+        {
+            //Arrange
+            int expected = 1;
+            int[] arr = { 5, 4, 10, 1 };
+            //Act
+            int actual = SmallTasksFunctions.Min(arr);
+            // Assert
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void TestMinWithEmptyArraytInputThrowsException()
+        {
+            //Arrange          
+            int[] arr = Array.Empty<int>();
+
+            //Act + Assert
+
+            Assert.Throws<InvalidOperationException>(
+           () =>
+           {
+               SmallTasksFunctions.Min(arr);
+           });
+        }
+
     }
 }

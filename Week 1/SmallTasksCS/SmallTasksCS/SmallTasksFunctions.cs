@@ -25,6 +25,6 @@
             return true;
         }
 
-
+        public static int Min(int[] arr) => arr.Min();
     }
 }
