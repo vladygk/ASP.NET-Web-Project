@@ -61,10 +61,10 @@
         static void Main(string[] args)
         {
             int[] arr = new int[] { 13, 15, 14, 12, 10, 9 };
-            Console.WriteLine(FindMissing(arr));
+            //Console.WriteLine(FindMissing(arr));
 
 
-            //Console.WriteLine(FindCubicRoot(8));
+            Console.WriteLine(FindCubicRoot(27));
         }
 
        
@@ -72,9 +72,6 @@
         static int FindMissing(int[] nums)
         {
             var sorted = MergeSort(nums);
-
-            // implement sort 
-           
 
 
             for (int i = 0; i < nums.Length-1; i++)
@@ -87,6 +84,9 @@
             return -1;
         }
 
-        
+        static double FindCubicRoot(int x)
+        {
+            return  Math.Round(Math.Pow(x, 1.0 / 3.0));
+        }
     }
 }
