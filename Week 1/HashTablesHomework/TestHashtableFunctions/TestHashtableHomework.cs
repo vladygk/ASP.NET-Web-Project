@@ -1,5 +1,5 @@
 using HashTablesHomework;
-using UserAccountCreator;
+using ClassTasks;
 namespace TestHashtableFunctions
 {
     [TestClass]
@@ -248,6 +248,67 @@ namespace TestHashtableFunctions
 
             //Assert
             Assert.AreEqual(expectedHashedPassword, actualHashedPassword);
+        }
+
+        [TestMethod]
+        public void TestCustomGetHashUser()
+        {
+            //Arrange
+            CustomGetHashUser user1 = new CustomGetHashUser("Pesho", "Peshov", 30);
+            CustomGetHashUser user2 = new CustomGetHashUser("Pesho", "Peshov", 30);
+            CustomGetHashUser user3 = new CustomGetHashUser("Pesho", "Peshov", 10);
+
+            HashSet<CustomGetHashUser> expected = new HashSet<CustomGetHashUser>() { new CustomGetHashUser("Pesho", "Peshov", 30), new CustomGetHashUser("Pesho", "Peshov", 10) };
+
+            //Act 
+            HashSet<CustomGetHashUser> actual = new HashSet<CustomGetHashUser>() { user1,user2,user3 };
+
+            bool areEqual = actual.SetEquals(expected);
+            //Assert
+            Assert.IsTrue(areEqual);
+        }
+
+        [TestMethod]
+        public void TestCustomHashTableInsert()
+        {
+            //Arrange
+            CustomeHashTable<string, string> table = new CustomeHashTable<string, string>();
+            string expected = "123";
+            //Act 
+            table.Insert("Ivan", "123");
+            string actual = table["Ivan"];
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestCustomHashTableFind()
+        {
+            //Arrange
+            CustomeHashTable<string, string> table = new CustomeHashTable<string, string>();
+            string expected = "123";
+            table.Insert("Ivan", "123");
+            //Act 
+            string actual = table.FindValue("Ivan");
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestCustomHashTableDelete()
+        {
+            //Arrange
+            CustomeHashTable<string, string> table = new CustomeHashTable<string, string>();
+            table.Insert("Ivan", "123");
+            int expectedLength = 0;
+
+
+            //Act 
+            table.Delete("Ivan");
+            int actualLength = table.Count;
+
+            //Assert
+            Assert.AreEqual(expectedLength, actualLength);
         }
     }
 }

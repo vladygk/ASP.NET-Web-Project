@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashTablesHomework", "HashT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHashtableFunctions", "TestHashtableFunctions\TestHashtableFunctions.csproj", "{F1E348AE-5313-4976-8495-1E8F2867D737}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccountCreator", "UserAccount\UserAccountCreator.csproj", "{06323311-42C1-44D8-A778-2EBBD2A4B7C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassTasks", "UserAccount\ClassTasks.csproj", "{06323311-42C1-44D8-A778-2EBBD2A4B7C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

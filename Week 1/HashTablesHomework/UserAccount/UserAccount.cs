@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace UserAccountCreator
+namespace ClassTasks
 {
     
     public class UserAccount
