@@ -3,100 +3,59 @@
     public class ComplexityFundamentals
     {
 
-        static void Swap(int[] arr, int first, int second)
-        {
-            int buff = arr[first];
-            arr[first] = arr[second];
-            arr[second] = buff;
-        }
-        static int[] MergeSort(int[] arr)
-        {
 
-            if (arr.Length == 1)
-            {
-                return arr;
-            }
-
-            int middleIdx = arr.Length / 2;
-            int[] firstHalf = arr.Take(middleIdx).ToArray();
-            int[] secondHalf = arr.Skip(middleIdx).ToArray();
-
-            return MergeArrays(MergeSort(firstHalf), MergeSort(secondHalf));
-
-        }
-
-        private static int[] MergeArrays(int[] left, int[] right)
-        {
-            int[] sorted = new int[left.Length + right.Length];
-
-            int leftIdx = 0, rightIdx = 0, sortedIdx = 0;
-
-
-            while (leftIdx < left.Length && rightIdx < right.Length)
-            {
-                if (left[leftIdx] < right[rightIdx])
-                {
-                    sorted[sortedIdx++] = left[leftIdx++];
-                }
-                else
-                {
-                    sorted[sortedIdx++] = right[rightIdx++];
-                }
-
-            }
-
-            while (leftIdx < left.Length)
-            {
-                sorted[sortedIdx++] = left[leftIdx++];
-
-            }
-
-            while (rightIdx < right.Length)
-            {
-                sorted[sortedIdx++] = right[rightIdx++];
-            }
-
-            return sorted;
-        }
         static void Main(string[] args)
         {
-            int[] arr = new int[] { 13, 15, 14, 12, 10, 9 };
+            double[] arr = new double[] { 13, 15, 14, 12, 10, 9 };
             Console.WriteLine(FindMissing(arr));
 
 
             Console.WriteLine(FindCubicRoot(-27));
         }
 
+        // 1 3 4     2.5*4
 
-
-        public static int FindMissing(int[] nums)
+        public static double FindMissing(double[] nums)
         {
-            if (nums.Length == 0)
+            if (nums.Length <= 1)
             {
                 throw new ArgumentException();
             }
-            var sorted = MergeSort(nums);
+            double min = nums.Min();
+            double max = nums.Max();
+            double sum = nums.Sum();
 
+            double expectedSum = ((min + max) / 2) * (nums.Length + 1);
 
-            for (int i = 0; i < nums.Length - 1; i++)
-            {
-                if (sorted[i + 1] - sorted[i] > 1)
-                {
-                    return sorted[i] + 1;
-                }
-            }
-            return -1;
+            return expectedSum - sum;
         }
 
-        public static int FindCubicRoot(int x)
+        public static double FindCubicRoot(int x)
         {
 
-            if (x < 0)
+            double start = 0;
+            double end = x;
+
+            while (true)
             {
-                return(int) -Math.Round(Math.Pow(-x, 1.0 / 3.0));
+                double middle = (end + start) / 2;
+                if (middle * middle * middle == x)
+                {
+                    return middle;
+                }
+                else if (middle * middle * middle < x)
+                {
+                    start = middle + 1;
+
+
+                }
+                else if (middle * middle * middle > x)
+                {
+
+                    end = middle - 1;
+                }
 
             }
-            return (int)Math.Round(Math.Pow(x, 1.0 / 3.0));
         }
 
     }
