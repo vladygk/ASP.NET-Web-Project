@@ -32,15 +32,15 @@ namespace Complexity_fundamentals
             return expectedSum - sum;
         }
 
-        public static BigInteger FindCubicRoot(int x)
+        public static int FindCubicRoot(int x)
         {
 
-            BigInteger start = 0;
-            BigInteger end = x;
+            int start = 0;
+            int end = 1290;
 
             while (true)
             {
-                BigInteger middle = (end + start) /2;
+                int middle = (end + start) /2;
                 if (middle * middle * middle == x)
                 {
                     return middle;

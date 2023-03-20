@@ -51,9 +51,9 @@ namespace TestComplexityFundamentalsHomework
         {
             //Arrange
             int input = 729;
-            BigInteger expected = 9;
+            int expected = 9;
             //Act
-            BigInteger actual = ComplexityFundamentals.FindCubicRoot(input);
+            int actual = ComplexityFundamentals.FindCubicRoot(input);
 
             //Assert
 
@@ -61,13 +61,13 @@ namespace TestComplexityFundamentalsHomework
         }
 
         [TestMethod]
-        public void TestFindCubicRootGivenMaxInt()
+        public void TestFindCubicRootGivenMaxPossibleIntWithExactCubicRoot()
         {
             //Arrange
             int input = 2_146_689_000;
-            BigInteger expected =(BigInteger) Math.Round(Math.Cbrt(input));
+            int expected =1290;
             //Act
-            BigInteger actual = ComplexityFundamentals.FindCubicRoot(input);
+            int actual = ComplexityFundamentals.FindCubicRoot(input);
 
             //Assert
 
@@ -81,9 +81,9 @@ namespace TestComplexityFundamentalsHomework
         {
             //Arrange
             int input = 0;
-            BigInteger expected = 0;
+            int expected = 0;
             //Act
-            BigInteger actual = ComplexityFundamentals.FindCubicRoot(input);
+            int actual = ComplexityFundamentals.FindCubicRoot(input);
 
             //Assert
 
