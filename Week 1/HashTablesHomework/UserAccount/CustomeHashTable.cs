@@ -8,7 +8,7 @@ namespace ClassTasks
         static LinkedList<KeyValuePair<T1, T2>>[] table;
          const int initialSize = 100;
         const int hashMagicNumber = 33;
-
+        static int tableLength = initialSize;
         public CustomeHashTable()
         {
             Count = 0;
@@ -21,27 +21,34 @@ namespace ClassTasks
 
         private static int Hash(T1 key)
         {
-            return key.ToString().Length* hashMagicNumber % table.Length;
+            return key.ToString().Length* hashMagicNumber % tableLength;
         }
 
-        private static double LoadFactor()
+        private  double LoadFactor()
         {
-            return table.Where(x => x != default).Count() / table.Length;
+            return this.Count / table.Length;
         }
 
         private static void Resize()
         {
-            var newTable = new LinkedList<KeyValuePair<T1, T2>>[table.Length * 2];
+            var newTable = new LinkedList<KeyValuePair<T1, T2>>[tableLength * 2];
 
             for (int i = 0; i < table.Length * 2; i++)
             {
                 newTable[i] = new LinkedList<KeyValuePair<T1, T2>>();
             }
+            tableLength = tableLength * 2;
             for (int i = 0; i < table.Length; i++)
             {
-                newTable[i] = table[i];
+                foreach(KeyValuePair<T1,T2> keyValuePair in table[i])
+                {
+                    int hashedIndex = Hash(keyValuePair.Key);
+                    newTable[hashedIndex].AddLast(keyValuePair);
+                }
+               
             }
             table = newTable;
+
         }
 
         public int Count { get; set; }
