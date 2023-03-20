@@ -13,10 +13,10 @@
                 {"777777","Ivan"}
             };
 
-             coolestCar =carplateOwner[coolPlateNumber]; 
-           
-              var result = new HashSet<string>( carplateOwner.Values
-                .Where(owner => (carplateOwner.Values.Count(x=>x==owner) > 1))).ToList();
+            coolestCar = carplateOwner[coolPlateNumber];
+
+            var result = new HashSet<string>(carplateOwner.Values
+              .Where(owner => (carplateOwner.Values.Count(x => x == owner) > 1))).ToList();
 
             return result;
         }
@@ -33,7 +33,7 @@
         {
             Dictionary<char, int> charDict = new Dictionary<char, int>();
 
-            foreach(char c in input)
+            foreach (char c in input)
             {
                 if (!charDict.ContainsKey(c))
                 {
@@ -42,11 +42,11 @@
                 charDict[c]++;
             }
 
-            List<char> uniqueChars =  charDict.Where(kvp => kvp.Value ==1).Select(kvp=>kvp.Key).ToList();
+            List<char> uniqueChars = charDict.Where(kvp => kvp.Value == 1).Select(kvp => kvp.Key).ToList();
 
 
             char firstUnique = uniqueChars.FirstOrDefault();
-            if(firstUnique == null)
+            if (firstUnique == null)
             {
                 indexFirstUnique = -1;
             }
@@ -56,6 +56,52 @@
             }
 
             return uniqueChars;
+        }
+
+        public static List<string> SpellChecker(string input, HashSet<string> allCorrectWords)
+        {
+            List<string> wrongWords = new List<string>();
+            if (input.Length == 0)
+            {
+                return wrongWords;
+            }
+
+            string inputWithoutPunctuation = input.Replace(",", String.Empty)
+                    .Replace(".", String.Empty)
+                    .Replace("!", String.Empty)
+                    .Replace("?", String.Empty);
+
+            string[] arrayOfWords = inputWithoutPunctuation.Split();
+            for (int i = 0; i < arrayOfWords.Length; i++)
+            {
+                if (!allCorrectWords.Contains(arrayOfWords[i].ToLower()))
+                {
+                    wrongWords.Add(arrayOfWords[i]);
+                }
+            }
+
+            return wrongWords;
+        }
+
+        public static Dictionary<SortedSet<char>, List<string>> GroupByAnagrams(List<string> words)
+        {
+            Dictionary<SortedSet<char>, List<string>> groupsByAnagram = new Dictionary<SortedSet<char>, List<string>>();
+
+
+            foreach(string word in words)
+            {
+                SortedSet<char> anagramChars = new SortedSet<char>(word.ToCharArray());
+
+                if (groupsByAnagram.Keys.FirstOrDefault(set => set.SetEquals(anagramChars)) == null)
+                {
+                    groupsByAnagram[anagramChars] = new List<string>();
+                    
+                }
+                groupsByAnagram[groupsByAnagram.Keys.FirstOrDefault(set => set.SetEquals(anagramChars))].Add(word);
+
+            }
+
+            return groupsByAnagram;
         }
     }
 }

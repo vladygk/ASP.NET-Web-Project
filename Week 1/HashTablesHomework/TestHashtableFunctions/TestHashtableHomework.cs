@@ -36,14 +36,14 @@ namespace TestHashtableFunctions
             int[] actual = HashTableFunctions.FindIntersectionOfTwoArrays(arrA, arrB);
 
             //Assert
-            CollectionAssert.AreEqual(expected,actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
         [TestMethod]
         public void TestFindIntersectionOfTwoArraysWithoutIntersectingElements()
         {
             //Arrange
             int[] arrA = new int[] { 1, 2, 3, 4, 5 };
-            int[] arrB = new int[] { 6,7 };
+            int[] arrB = new int[] { 6, 7 };
 
             int[] expected = Array.Empty<int>();
             //Act 
@@ -102,6 +102,137 @@ namespace TestHashtableFunctions
             //Assert
             Assert.AreEqual(expectedIndex, actualIndex);
             CollectionAssert.AreEqual(exptectedList, actualList);
+        }
+
+        [TestMethod]
+        public void TestSpellCheckGivenASentence()
+        {
+            //Arrange
+            string input = "Helo world, ho are you?";
+
+            HashSet<string> correctWords = new HashSet<string>()
+            {
+                "hello",
+                "world",
+                "how",
+                "are",
+                "you"
+            };
+
+            List<string> expected = new List<string>()
+            {
+                "Helo",
+                "ho"
+            };
+            //Act
+            List<string> actual = HashTableFunctions.SpellChecker(input, correctWords);
+
+            //Assert
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestSpellCheckGivenEmptyInput()
+        {
+            //Arrange
+            string input = String.Empty;
+
+            HashSet<string> correctWords = new HashSet<string>()
+            {
+                "hello",
+                "world",
+                "how",
+                "are",
+                "you"
+            };
+
+            List<string> expected = new List<string>();
+
+            //Act
+            List<string> actual = HashTableFunctions.SpellChecker(input, correctWords);
+
+            //Assert
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGroupByAnagrams()
+        {
+            //Arrange
+            List<string> input = new List<string>()
+            {
+                "abba",
+                "baba",
+                "hell",
+                "hlel",
+                "hey"
+
+            };
+            Dictionary<SortedSet<char>, List<string>> expected =
+                new Dictionary<SortedSet<char>, List<string>>();
+            expected.Add(new SortedSet<char>()
+            {
+                'a',
+               'b'
+            }, new List<string>()
+            {
+                "abba",
+                "baba"
+            });
+
+            expected.Add(new SortedSet<char>()
+            {
+                'h',
+               'e',
+               'l'
+            }, new List<string>()
+            {
+                "hell",
+                "hlel"
+            });
+
+            expected.Add(new SortedSet<char>()
+            {
+                'h',
+               'e',
+               'y'
+            }, new List<string>()
+            {
+                "hey",
+
+            });
+
+            List<string> expectedGroup1 = new List<string>()
+            {
+                "abba",
+                "baba"
+            };
+
+            List<string> expectedGroup2 = new List<string>()
+            {
+                 "hell",
+                "hlel"
+            };
+
+            List<string> expectedGroup3 = new List<string>()
+            {
+                 "hey"
+            };
+
+
+            //Act
+            var actual = HashTableFunctions.GroupByAnagrams(input);
+
+            List<string> actualGroup1 = actual.Values.ToList()[0];
+
+            List<string> actualGroup2 = actual.Values.ToList()[1];
+            List<string> actualGroup3 = actual.Values.ToList()[2];
+            //
+            CollectionAssert.AreEqual(expectedGroup1, actualGroup1);
+
+            CollectionAssert.AreEqual(expectedGroup2, actualGroup2);
+
+            CollectionAssert.AreEqual(expectedGroup3, actualGroup3);
         }
     }
 }
