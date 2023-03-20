@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HashTablesHomework\HashTablesHomework.csproj" />
+    <ProjectReference Include="..\UserAccount\UserAccountCreator.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 using HashTablesHomework;
-
+using UserAccountCreator;
 namespace TestHashtableFunctions
 {
     [TestClass]
@@ -233,6 +233,21 @@ namespace TestHashtableFunctions
             CollectionAssert.AreEqual(expectedGroup2, actualGroup2);
 
             CollectionAssert.AreEqual(expectedGroup3, actualGroup3);
+        }
+
+        [TestMethod]
+        public void TestUserAccountClass()
+        {
+            //Arrange 
+            string username = "test";
+            string password = "123";
+            string expectedHashedPassword = @"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3";
+            //Act
+            UserAccount user = new UserAccount(username, password);
+            string actualHashedPassword = user.Password;
+
+            //Assert
+            Assert.AreEqual(expectedHashedPassword, actualHashedPassword);
         }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashTablesHomework", "HashT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHashtableFunctions", "TestHashtableFunctions\TestHashtableFunctions.csproj", "{F1E348AE-5313-4976-8495-1E8F2867D737}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAccountCreator", "UserAccount\UserAccountCreator.csproj", "{06323311-42C1-44D8-A778-2EBBD2A4B7C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F1E348AE-5313-4976-8495-1E8F2867D737}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1E348AE-5313-4976-8495-1E8F2867D737}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1E348AE-5313-4976-8495-1E8F2867D737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06323311-42C1-44D8-A778-2EBBD2A4B7C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06323311-42C1-44D8-A778-2EBBD2A4B7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06323311-42C1-44D8-A778-2EBBD2A4B7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06323311-42C1-44D8-A778-2EBBD2A4B7C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
