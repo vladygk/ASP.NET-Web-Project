@@ -1,4 +1,6 @@
-﻿namespace Complexity_fundamentals
+﻿using System.Numerics;
+
+namespace Complexity_fundamentals
 {
     public class ComplexityFundamentals
     {
@@ -30,15 +32,15 @@
             return expectedSum - sum;
         }
 
-        public static double FindCubicRoot(int x)
+        public static BigInteger FindCubicRoot(int x)
         {
 
-            double start = 0;
-            double end = x;
+            BigInteger start = 0;
+            BigInteger end = x;
 
             while (true)
             {
-                double middle = (end + start) / 2;
+                BigInteger middle = (end + start) /2;
                 if (middle * middle * middle == x)
                 {
                     return middle;
