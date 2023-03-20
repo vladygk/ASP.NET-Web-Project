@@ -34,6 +34,19 @@ namespace TestComplexityFundamentalsHomework
         }
 
         [TestMethod]
+        public void TestFindMissingNumberGivenEmptyArray()
+        {
+            //Arrange
+            int[] arr = new int[0];
+
+            //Act  & Assert
+            Assert.ThrowsException<ArgumentException>(() =>
+            {
+                ComplexityFundamentals.FindMissing(arr);
+            });
+        }
+
+        [TestMethod]
         public void TestFindCubicRootGivenPositiveNumber()
         {
             //Arrange

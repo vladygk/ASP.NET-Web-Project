@@ -71,6 +71,10 @@
 
         public static int FindMissing(int[] nums)
         {
+            if (nums.Length == 0)
+            {
+                throw new ArgumentException();
+            }
             var sorted = MergeSort(nums);
 
 
