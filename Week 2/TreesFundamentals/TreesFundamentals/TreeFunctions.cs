@@ -156,32 +156,32 @@ namespace TreesFundamentals
             }
 
         }
-        static void heapify(List<int> Array, int n, int i)
+        static void heapify(List<int> Array, int size, int index)
         {
-            int max = i;
-            int left = 2 * i + 1;
-            int right = 2 * i + 2;
+            int max = index;
+            int left = 2 * index + 1;
+            int right = 2 * index + 2;
 
             //if the left element is greater than root
-            if (left <= n && Array[left] > Array[max])
+            if (left <= size && Array[left] > Array[max])
             {
                 max = left;
             }
 
             //if the right element is greater than root
-            if (right <= n && Array[right] > Array[max])
+            if (right <= size && Array[right] > Array[max])
             {
                 max = right;
             }
 
             //if the max is not i
-            if (max != i)
+            if (max != index)
             {
-                int temp = Array[i];
-                Array[i] = Array[max];
+                int temp = Array[index];
+                Array[index] = Array[max];
                 Array[max] = temp;
                 
-                heapify(Array, n, max);
+                heapify(Array, size, max);
             }
         }
     }
