@@ -48,12 +48,12 @@ namespace TestDataStructuresFunctions
         {
             //Arrange
             LinkedList<int> input = new LinkedList<int>(new List<int>() { 1, 2, 3, 4, 5 });
-            LinkedList<int> expected = new LinkedList<int>(new List<int>() { 1, 2, 4, 5 });
+            
             // Act
-            LinkedList<int> actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
+            bool actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
 
             //Assert
-            CollectionAssert.AreEqual(actual, expected);
+            Assert.IsTrue(actual);
         }
 
         [TestMethod]
@@ -61,12 +61,12 @@ namespace TestDataStructuresFunctions
         {
             //Arrange
             LinkedList<int> input = new LinkedList<int>(new List<int>() { 1 });
-            LinkedList<int> expected = new LinkedList<int>(new List<int>());
+            
             // Act
-            LinkedList<int> actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
+            bool actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
 
             //Assert
-            CollectionAssert.AreEqual(actual, expected);
+            Assert.IsTrue(actual);
         }
 
         [TestMethod]
@@ -74,12 +74,12 @@ namespace TestDataStructuresFunctions
         {
             //Arrange
             LinkedList<int> input = new LinkedList<int>(new List<int>() { 1, 2, 3, 4 });
-            LinkedList<int> expected = new LinkedList<int>(new List<int>() { 1, 2, 4 });
+            
             // Act
-            LinkedList<int> actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
+            bool actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
 
             //Assert
-            CollectionAssert.AreEqual(actual, expected);
+            Assert.IsTrue(actual);
         }
 
 
@@ -89,12 +89,12 @@ namespace TestDataStructuresFunctions
         {
             //Arrange
             LinkedList<int> input = new LinkedList<int>();
-            LinkedList<int> expected = new LinkedList<int>();
+            
             // Act
-            LinkedList<int> actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
+           bool actual = DataStructuresFunctions<int>.EraseTheMiddleElement(input);
 
             //Assert
-            CollectionAssert.AreEqual(actual, expected);
+            Assert.IsFalse(actual);
         }
 
         [TestMethod]

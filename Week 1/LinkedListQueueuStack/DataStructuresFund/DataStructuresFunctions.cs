@@ -9,30 +9,26 @@ namespace DataStructuresFund
 
         public static List<T> ReturnUniqueElements(List<T> input) => new HashSet<T>(input).ToList();
 
-        public static LinkedList<T> EraseTheMiddleElement(LinkedList<T> input)
+        public static bool EraseTheMiddleElement(LinkedList<T> input)
         {
-            LinkedList<T> result = new LinkedList<T>();
+            
             if (input.Count == 0)
             {
-                return result;
+                return false;
             }
             int middle = input.Count / 2;
-
-            while (middle-- > 0)
+            LinkedListNode<T> current = input.First;
+            while (middle > 0)
             {
-                LinkedListNode<T> firstNode = new LinkedListNode<T>(input.First.Value);
-                result.AddLast(firstNode);
-                input.RemoveFirst();
+                current = current.Next;
+                
+                middle--;
             }
 
-            input.RemoveFirst();
-            while (input.Count > 0)
-            {
-                LinkedListNode<T> firstNode = new LinkedListNode<T>(input.First.Value);
-                result.AddLast(firstNode);
-                input.RemoveFirst();
-            }
-            return result;
+            input.Remove(current); // remove the middle node
+
+
+            return true; 
         }
 
         public static Stack<int> SolveTowersOfHonoi(Stack<int> A)
