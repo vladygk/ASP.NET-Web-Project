@@ -9,18 +9,27 @@ namespace TestTreeFundamentals
         public void TestPreOrderTraversal()
         {
             //Arrange
-            TreeNode leftChild = new TreeNode(2, null, null);
-            TreeNode rigthChild = new TreeNode(3, null, null);
-            TreeNode parent = new TreeNode(1, leftChild, rigthChild);
+            TreeNode node9 = new TreeNode(76, null, null);
+            TreeNode node8 = new TreeNode(61, null, null);
+            TreeNode node7 = new TreeNode(35, null, null);
+
+            TreeNode node6 = new TreeNode(69, node8, node9);
+            TreeNode node5 = new TreeNode(38, node7, null);
+            TreeNode node4 = new TreeNode(24, null, null);
+
+            TreeNode node3 = new TreeNode(52, node5, node6);
+            TreeNode node2 = new TreeNode(11, null, node4);
+            TreeNode node1 = new TreeNode(25, node2, node3);
+
             List<TreeNode> expected = new List<TreeNode>()
             {
-                parent, leftChild, rigthChild
+                 node1,node2,node4,node3,node5,node7,node6,node8,node9
             };
             //Act
             List<TreeNode> actual = new List<TreeNode>();
-            TreeFunctions.PreOrder(parent, actual);
-
+            TreeFunctions.PreOrder(node1, actual);
             //Assert
+            
             CollectionAssert.AreEqual(expected, actual);
 
         }
@@ -78,7 +87,7 @@ namespace TestTreeFundamentals
             //Act
             int height = -1;
             int maxHeight = 0;
-            TreeFunctions.GetHeight(node1, ref height,  ref maxHeight);
+            TreeFunctions.GetHeight(node1, ref height, ref maxHeight);
             //Assert
             Assert.AreEqual(expectedHeight, maxHeight);
         }
@@ -150,7 +159,20 @@ namespace TestTreeFundamentals
             List<int> actual = TreeFunctions.MergeSortedLists(listOfLists);
 
             //Assert
-            CollectionAssert.AreEqual(expected, actual);    
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestHeapSort()
+        {
+            //Arrange
+            List<int> input = new List<int>() { 5, 2, 7, 3 };
+            List<int> expected = new List<int> { 2,3,5,7 };
+            //Act
+             TreeFunctions.HeapSort(input);
+
+            //Assert
+            CollectionAssert.AreEqual(expected, input);
         }
     }
 }

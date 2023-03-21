@@ -5,25 +5,22 @@
     {
         static void Main(string[] args)
         {
-            TreeNode leftChild = new TreeNode(2, null, null);
-            TreeNode rigthChild = new TreeNode(3, null, null);
-            TreeNode parent = new TreeNode(1, leftChild, rigthChild);
+            TreeNode node9 = new TreeNode(76, null, null);
+            TreeNode node8 = new TreeNode(61, null, null);
+            TreeNode node7 = new TreeNode(35, null, null);
 
+            TreeNode node6 = new TreeNode(69, node8, node9);
+            TreeNode node5 = new TreeNode(38, node7, null);
+            TreeNode node4 = new TreeNode(24, null, null);
 
+            TreeNode node3 = new TreeNode(52, node5, node6);
+            TreeNode node2 = new TreeNode(11, null, node4);
+            TreeNode node1 = new TreeNode(25, node2, node3);
 
-            //TreeFunctions.PreOrder(parent);
-            //TreeFunctions.PostOrder(parent);
-            //TreeFunctions.InOrder(parent);
-            List<int> list1 = new List<int>() { 1, 3, 5 };
-            List<int> list2 = new List<int>() { 2,4,6 };
-            List<int> list3 = new List<int>() { 7 };
+            List<TreeNode> list = new List<TreeNode>();
+            TreeFunctions.PreOrder(node1, list);
 
-            List<List<int>> listOfLists = new List<List<int>>()
-            {
-                list1, list2 , list3
-            };
-            Console.WriteLine(String.Join("  ", TreeFunctions.MergeSortedLists(listOfLists)));
-           
+            Console.WriteLine(String.Join(" ",list.Select(x=>x.Value)));
         }
     }
 }

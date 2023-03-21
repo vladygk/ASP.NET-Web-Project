@@ -89,7 +89,7 @@ namespace TreesFundamentals
 
         }
 
-        public static int GetKSmallestElementInBFS(TreeNode root,int k)
+        public static int GetKSmallestElementInBFS(TreeNode root, int k)
         {
             Queue<TreeNode> nodes = new Queue<TreeNode>();
             nodes.Enqueue(root);
@@ -101,25 +101,25 @@ namespace TreesFundamentals
                 if (currentNode.LeftChild != null)
                 {
                     nodes.Enqueue(currentNode.LeftChild);
-                    
+
                 }
                 if (currentNode.RightChild != null)
                 {
                     nodes.Enqueue(currentNode.RightChild);
-                   
+
                 }
             }
             return GetKSmallestElement(listOfNodeValues, k);
         }
         private static int GetKSmallestElement(List<int> elements, int k)
         {
-            return elements.OrderBy(x => x).ToList()[k-1];
+            return elements.OrderBy(x => x).ToList()[k - 1];
         }
 
         public static List<int> MergeSortedLists(List<List<int>> listOfSortedLists)
         {
 
-            
+
             PriorityQueue<int, int> queue = new PriorityQueue<int, int>();
             for (int i = 0; i < listOfSortedLists.Count; i++)
             {
@@ -129,11 +129,60 @@ namespace TreesFundamentals
                 }
             }
             List<int> merged = new List<int>();
-            while(queue.Count > 0) 
+            while (queue.Count > 0)
             {
                 merged.Add(queue.Dequeue());
             }
             return merged;
+        }
+
+        public static void HeapSort(List<int> input)
+        {
+         
+        
+            for (int i = input.Count / 2; i >= 0; i--)
+            {
+                heapify(input, input.Count - 1, i);
+            }
+            for (int i = input.Count - 1; i >= 0; i--)
+            {
+                //swap last element of the max-heap with the first element
+
+                (input[i], input[0]) = (input[0], input[i]);
+                
+
+                //exclude the last element from the heap and rebuild the heap 
+                heapify(input, i - 1, 0);
+            }
+
+        }
+        static void heapify(List<int> Array, int n, int i)
+        {
+            int max = i;
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+
+            //if the left element is greater than root
+            if (left <= n && Array[left] > Array[max])
+            {
+                max = left;
+            }
+
+            //if the right element is greater than root
+            if (right <= n && Array[right] > Array[max])
+            {
+                max = right;
+            }
+
+            //if the max is not i
+            if (max != i)
+            {
+                int temp = Array[i];
+                Array[i] = Array[max];
+                Array[max] = temp;
+                
+                heapify(Array, n, max);
+            }
         }
     }
 }
