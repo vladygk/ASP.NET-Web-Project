@@ -126,6 +126,29 @@ namespace TestDataStructuresFunctions
         }
 
         [TestMethod]
+        public void TestExpressionExpanderWithComplexInput()
+        {
+            //Arrange
+            string input = "AB3(C)4(DE)F";
+            string expected1 = "ABDCDCDCZZZZEGGGXYYWWWWWEGGGXYYWWWWW";
+            string expected2 = "HAAAFFCHAAAFFCEE";
+            string expected3 = "EE";
+
+            string input1 = "AB3(DC)2(0(F)ZZ0(R)0(P))2(E3(G)X2(Y)5(W))0(H)";
+            string input2 = "2(H3(A)2(F)C)2(E)";
+            string input3 = "0(H3(A)2(F)C)2(E)";
+            
+            //Act
+            string actual1 = DataStructuresFunctions<int>.ExpressionExpander(input1);
+            string actual2 = DataStructuresFunctions<int>.ExpressionExpander(input2);
+            string actual3 = DataStructuresFunctions<int>.ExpressionExpander(input3);
+            //Assert
+            Assert.AreEqual(expected1, actual1);
+            Assert.AreEqual(expected2, actual2);
+            Assert.AreEqual(expected3, actual3);
+        }
+
+        [TestMethod]
         public void TestExpressionExpanderWithNestedBrackets()
         {
             //Arrange
