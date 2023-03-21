@@ -10,10 +10,10 @@ namespace TestComplexityFundamentalsHomework
         public void TestFindMissingNumberGivenArrayWithFiveNumbers()
         {
             //Arrange
-            double[] arr = new double[] { 4, 5, 1, 2, 6 };
-            double expected = 3;
+            int[] arr = new int[] { 4, 5, 1, 2, 6 };
+            int expected = 3;
             //Act
-            double actual = ComplexityFundamentals.FindMissing(arr);
+            int actual = ComplexityFundamentals.FindMissing(arr);
 
             //Assert
 
@@ -24,8 +24,8 @@ namespace TestComplexityFundamentalsHomework
         public void TestFindMissingNumberGivenArrayWithOneNumbers()
         {
             //Arrange
-            double[] arr = new double[] { 1 };
-            double expected = -1;
+            int[] arr = new int[] { 1 };
+            int expected = -1;
             //Act  & Assert
             Assert.ThrowsException<ArgumentException>(() =>
             {
@@ -37,7 +37,7 @@ namespace TestComplexityFundamentalsHomework
         public void TestFindMissingNumberGivenEmptyArray()
         {
             //Arrange
-            double[] arr = new double[0];
+            int[] arr = new int[0];
 
             //Act  & Assert
             Assert.ThrowsException<ArgumentException>(() =>

@@ -8,7 +8,7 @@ namespace Complexity_fundamentals
 
         static void Main(string[] args)
         {
-            double[] arr = new double[] { 13, 15, 14, 12, 10, 9 };
+            int[] arr = new int[] { 13, 15, 14, 12, 10, 9 };
             Console.WriteLine(FindMissing(arr));
 
 
@@ -17,17 +17,32 @@ namespace Complexity_fundamentals
 
         // 1 3 4     2.5*4
 
-        public static double FindMissing(double[] nums)
+        public static int FindMissing(int[] nums)
         {
             if (nums.Length <= 1)
             {
                 throw new ArgumentException();
             }
-            double min = nums.Min();
-            double max = nums.Max();
-            double sum = nums.Sum();
+            int min = int.MaxValue;
+            int max = int.MinValue;
+            int sum = 0;
 
-            double expectedSum = ((min + max) / 2) * (nums.Length + 1);
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] < min)
+                {
+                    min = nums[i];
+                }
+
+                if (nums[i] > max)
+                {
+                    max = nums[i];  
+                }
+
+                sum += nums[i];
+            }
+
+            int expectedSum = ((min + max) * (nums.Length + 1))/2;
 
             return expectedSum - sum;
         }
