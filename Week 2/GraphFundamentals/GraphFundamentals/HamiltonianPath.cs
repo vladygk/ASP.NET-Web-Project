@@ -37,13 +37,13 @@ namespace GraphFundamentals
             {
                 if (!visited.Contains(child))
                 {
-                    visited.Add(child);
+                   
                     DFS(child, graph, numberOfVertices, visited, counter, ref isHamilt);
                     counter--;
 
                 }
             }
-            Console.WriteLine(node);
+            
         }
     }
 }
