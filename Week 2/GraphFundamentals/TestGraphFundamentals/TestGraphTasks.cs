@@ -72,9 +72,9 @@ public class TestGraphTasks
     {
         //Arrange
         List<List<int>> graph = new List<List<int>>();
-        graph.Add(new List<int>() { 1,}); // 0 depends on 1 
+        graph.Add(new List<int>() { 1, }); // 0 depends on 1 
         graph.Add(new List<int> { 0 }); // 1 depends on 0
-    
+
 
         //Act + Assert
         Assert.ThrowsException<ArgumentException>(() =>
@@ -82,4 +82,66 @@ public class TestGraphTasks
             CalculateValueOfFieldsFunction.CalculateFields(graph);
         });
     }
+    [TestMethod]
+    public void TestIsHamiltonianGivenHamiltonianGraph()
+    {
+        //Arrange
+        Dictionary<string, List<string>> graph = new Dictionary<string, List<string>>();
+        graph.Add("A", new List<string>() { "B", "C" });
+        graph.Add("B", new List<string>() { "C", "E", "A" });
+        graph.Add("C", new List<string>() { "D", "B", "A" });
+        graph.Add("D", new List<string>() { "E", "C" });
+        graph.Add("E", new List<string>() { "B", "D" });
+
+        //Act
+        bool isHamiltonian = HamiltonianPath.IsHamiltonian(graph,"A");
+
+        //Assert
+        Assert.IsTrue(isHamiltonian);
+    }
+    [TestMethod]
+    public void TestIsHamiltonianGivenNonHamiltonianGraph()
+    {
+        //Arrange
+        Dictionary<string, List<string>> graph = new Dictionary<string, List<string>>();
+        graph.Add("A", new List<string>() { "B" });
+        graph.Add("B", new List<string>() { "C", "E" });
+        graph.Add("C", new List<string>() { "D", "B"});
+        graph.Add("D", new List<string>() { "E", "C","F" });
+        graph.Add("E", new List<string>() { "B", "D" });
+        graph.Add("F", new List<string>() { "D"});
+
+        //Act
+        bool isHamiltonian = HamiltonianPath.IsHamiltonian(graph, "A");
+
+        //Assert
+        Assert.IsFalse(isHamiltonian);
+    }
+
+    [TestMethod]
+    public void TestCalculatePathTimeCost()
+    {
+        //Arrange 
+        int numberNodes = 4;
+        int numberEdges = 5;
+        int pricePerHour = 1000;
+        List<string> edgeData = new List<string>()
+        {
+            "1 2 1 2500",
+            "1 3 1 3000",
+            "1 4 2 7000",
+            "2 4 1 3000",
+            "3 4 1 2000"
+        };
+        int startNode = 1;
+        int endNode = 4;
+
+        string expected = "1-> 3-> 4 3 8000";
+        //Act
+        string actual = Djikstra.CalculatePathTimeCost(pricePerHour,numberNodes,numberEdges,edgeData,startNode,endNode);
+
+        //Assert
+        Assert.AreEqual(expected, actual);  
+    }
+
 }
