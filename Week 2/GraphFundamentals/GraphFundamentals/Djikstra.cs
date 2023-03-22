@@ -126,7 +126,7 @@ namespace GraphFundamentals
             StringBuilder result = new StringBuilder();
             result.Append(String.Join("-> ", path)); //apend path
             result.Append(" ");
-            result.Append(times[endNode] + path.Count - 2); //append time
+            result.Append(times[endNode] + path.Count - 2); //append time, -2 is beacuse with don't wait at the begining and the end
             result.Append(" ");
             result.Append(prices[endNode] + pricePerHour * (path.Count - 2 + times[endNode]) + " "); // append price
 
