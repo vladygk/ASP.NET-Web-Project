@@ -31,7 +31,7 @@ namespace GraphFundamentals
             , int startNode
             , int endNode)
         {
-            int hours = 0;
+        
             List<Edge>[] graph = new List<Edge>[nodes + 1];
             for (int i = 0; i < graph.Length; i++)
             {
