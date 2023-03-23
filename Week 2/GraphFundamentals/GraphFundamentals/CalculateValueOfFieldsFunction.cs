@@ -18,18 +18,18 @@ namespace GraphFundamentals
             Dictionary<int, int> allCalculatedFields = new Dictionary<int, int>();
 
             // List<List<int>> fieldsWithDependencies = graph.Where(x=>x.Count > 0).ToList();  
-
             for (int i = 0; i < graph.Count; i++)
             {
-                if (graph[i].Count > 0)
-                {
-                    allCalculatedFields.Add(i, graph[i].Sum());
-
-                }
-                else
+                if (graph[i].Count== 0)
                 {
                     allCalculatedFields.Add(i, i);
                 }
+            }
+
+
+            for (int i = 0; i < graph.Count; i++)
+            {
+                allCalculatedFields.Add(i, graph[i].Sum());
             }
 
             return allCalculatedFields;
