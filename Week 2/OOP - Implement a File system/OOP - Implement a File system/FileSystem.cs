@@ -53,6 +53,9 @@ public class FileSystem
             }else if ((command == "folder"))
             {
                 Console.WriteLine(CurrentFolder.Name);
+            }else if (command == "clear")
+            {
+                Console.Clear();    
             }
 
 

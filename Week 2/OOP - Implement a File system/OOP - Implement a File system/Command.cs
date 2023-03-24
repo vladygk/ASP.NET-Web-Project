@@ -146,7 +146,7 @@ public class Command
     {
         string fileName = inputCmdArgs[1];
         int lineNumber = int.Parse(inputCmdArgs[2]);
-        string lineContent = inputCmdArgs[3];
+        string lineContent = String.Join(" ",inputCmdArgs.Skip(3).Take(inputCmdArgs.Length-3));
         string optionalParam = string.Empty;
         if (inputCmdArgs.Length == 5)
         {
