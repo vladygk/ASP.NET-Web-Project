@@ -1,13 +1,10 @@
-﻿
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 
 namespace OOP___Implement_a_File_system;
 
 public class Command
 {
-    
+
 
     public static int GetSize(Folder folder)
     {
@@ -16,7 +13,7 @@ public class Command
             return folder.Files.Sum(f => f.Size);
         }
 
-        return folder.Files.Sum(f=>f.Size) + folder.Folders.Sum(fl=>GetSize(fl));
+        return folder.Files.Sum(f => f.Size) + folder.Folders.Sum(fl => GetSize(fl));
     }
     private static string GetPath(Stack<Folder> Path)
     {
@@ -27,7 +24,7 @@ public class Command
 
 
 
-    public static Folder? CD( Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
+    public static Folder? CD(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
     {
         string folderName = inputCmdArgs[1];
         if (folderName != ".." && folderName != ".")
@@ -41,8 +38,8 @@ public class Command
             {
                 Folder folder = CurrentFolder.Folders.First(f => f.Name == folderName);
                 Path.Push(folder);
-             
-                
+
+
                 Console.WriteLine(GetPath(Path));
                 return Path.Peek();
             }
@@ -54,7 +51,7 @@ public class Command
             Console.WriteLine(GetPath(Path));
             return Path.Peek();
         }
-        else if(folderName == "..") 
+        else if (folderName == "..")
         {
             if (Path.Count <= 1)
             {
@@ -68,7 +65,7 @@ public class Command
                 return Path.Peek();
             }
         }
-        return Path.Peek(); 
+        return Path.Peek();
     }
 
     public static void MkDir(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
@@ -146,7 +143,7 @@ public class Command
     {
         string fileName = inputCmdArgs[1];
         int lineNumber = int.Parse(inputCmdArgs[2]);
-        string lineContent = String.Join(" ",inputCmdArgs.Skip(3).Take(inputCmdArgs.Length-3));
+        string lineContent = String.Join(" ", inputCmdArgs.Skip(3).Take(inputCmdArgs.Length - 3));
         string optionalParam = string.Empty;
         if (inputCmdArgs.Length == 5)
         {
@@ -201,15 +198,22 @@ public class Command
 
     public static void Ls(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
     {
-        if (inputCmdArgs.Length == 3)
+        if (inputCmdArgs.Length==3&& inputCmdArgs[2] == "desc")
         {
             if (inputCmdArgs[1] == "--sorted" && inputCmdArgs[2] == "desc")
             {
                 Console.WriteLine(String.Join(Environment.NewLine, CurrentFolder
-                    .Folders.OrderByDescending(f=>GetSize(f)).Select(f=>f.Name)));
+                    .Folders.OrderByDescending(f => GetSize(f)).Select(f => f.Name)));
 
                 Console.WriteLine(String.Join(Environment.NewLine, CurrentFolder
-                   .Files.OrderByDescending(f =>f.Size).Select(f => f.Name)));
+                   .Files.OrderByDescending(f => f.Size).Select(f => f.Name)));
+            }
+        }
+        else if (inputCmdArgs.Length == 4 && inputCmdArgs[2] == "wc")
+        {
+            foreach (var file in CurrentFolder.Files)
+            {
+                Wc(CurrentFolder, inputCmdArgs,Path,file.Name);
             }
         }
         else
@@ -225,4 +229,55 @@ public class Command
         }
 
     }
+
+    public static void Wc(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path, string optionalFileName)
+    {
+        string fileName = String.Empty;
+
+        if (optionalFileName != String.Empty)
+        {
+            fileName = optionalFileName;
+        }
+        else
+        {
+            fileName = inputCmdArgs[1];
+
+        }
+
+        if (fileName == "-l")
+        {
+            fileName = inputCmdArgs[2];
+            File file = FindFile(fileName, CurrentFolder);
+            if (file == null)
+            {
+                int countLines = string.Join(" ", inputCmdArgs.Skip(1).Take(inputCmdArgs.Length - 1)).Split(Environment.NewLine).Length;
+                Console.WriteLine($"Number of lines {countLines}");
+            }
+            else
+            {
+                Console.WriteLine($"Number of lines in file: {file.Size}");
+            }
+        }
+        else
+        {
+            File file = FindFile(fileName, CurrentFolder);
+
+            if (file == null)
+            {
+                Console.WriteLine(inputCmdArgs.Length - 1);
+            }
+            else
+            {
+                int wordsCount = 0;
+                foreach (var line in file.content)
+                {
+                    wordsCount += line.Value.Split(" ").Length;
+                }
+
+                Console.WriteLine($"Number of words {wordsCount} in file {fileName}");
+            }
+        }
+    }
+
+
 }

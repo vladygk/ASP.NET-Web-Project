@@ -56,6 +56,9 @@ public class FileSystem
             }else if (command == "clear")
             {
                 Console.Clear();    
+            }else if (command == "wc")
+            {
+                Command.Wc(CurrentFolder,inputCmdArgs,Path,String.Empty);
             }
 
 
