@@ -5,6 +5,8 @@
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green; //to look more badass
+            
             FileSystem fs = new FileSystem();
             fs.Cmd();
         }

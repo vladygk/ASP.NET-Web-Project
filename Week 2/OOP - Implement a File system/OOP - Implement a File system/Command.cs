@@ -7,6 +7,7 @@ namespace OOP___Implement_a_File_system;
 
 public class Command
 {
+    
 
     public static int GetSize(Folder folder)
     {

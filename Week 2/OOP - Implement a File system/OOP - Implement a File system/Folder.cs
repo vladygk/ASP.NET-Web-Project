@@ -10,7 +10,7 @@ public class Folder
         
     }
     public string Name{ get; set; }
-    public string Path { get; set; } //TO DO
+   
     public HashSet<File> Files { get; set; }
     public HashSet<Folder> Folders { get; set; }
 }
