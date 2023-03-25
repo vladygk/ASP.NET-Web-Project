@@ -209,7 +209,7 @@ public class Command
                    .Files.OrderByDescending(f => f.Size).Select(f => f.Name)));
             }
         }
-        else if (inputCmdArgs.Length == 5 && inputCmdArgs[2] == "wc")
+        else if (inputCmdArgs.Length == 4 && inputCmdArgs[2] == "wc")
         {
             foreach (var file in CurrentFolder.Files)
             {
