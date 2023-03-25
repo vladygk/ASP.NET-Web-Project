@@ -7,10 +7,10 @@ public class Folder
         this.Name = name;
         Files = new HashSet<File> ();
         Folders = new HashSet<Folder> ();
-        
     }
     public string Name{ get; set; }
    
     public HashSet<File> Files { get; set; }
+
     public HashSet<Folder> Folders { get; set; }
 }

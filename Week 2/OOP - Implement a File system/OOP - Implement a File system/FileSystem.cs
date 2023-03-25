@@ -1,10 +1,8 @@
-﻿
-
-namespace OOP___Implement_a_File_system;
+﻿namespace OOP___Implement_a_File_system;
 
 public class FileSystem
 {
-    public  Folder CurrentFolder { get; set; }
+    public Folder CurrentFolder { get; set; }
     public Stack<Folder> Path { get; set; }
     public FileSystem()
     {
@@ -23,8 +21,7 @@ public class FileSystem
 
             if (command == "cd")
             {
-
-               CurrentFolder = Command.CD( CurrentFolder, inputCmdArgs, Path) ?? new Folder("/");
+                CurrentFolder = Command.CD(CurrentFolder, inputCmdArgs, Path) ?? new Folder("/");
             }
             else if (command == "mkdir")
             {
@@ -37,28 +34,34 @@ public class FileSystem
             else if (command == "cat")
             {
                 Command.Cat(CurrentFolder, inputCmdArgs, Path);
-            }else if (command == "tail")
+            }
+            else if (command == "tail")
             {
                 Command.Tail(CurrentFolder, inputCmdArgs, Path);
-            }else if(command == "write")
+            }
+            else if (command == "write")
             {
                 Command.Write(CurrentFolder, inputCmdArgs, Path);
             }
             else if (command == "ls")
             {
                 Command.Ls(CurrentFolder, inputCmdArgs, Path);
-            }else if (command == "size")
+            }
+            else if (command == "size")
             {
                 Console.WriteLine(Command.GetSize(CurrentFolder));
-            }else if ((command == "folder"))
+            }
+            else if ((command == "folder"))
             {
                 Console.WriteLine(CurrentFolder.Name);
-            }else if (command == "clear")
+            }
+            else if (command == "clear")
             {
-                Console.Clear();    
-            }else if (command == "wc")
+                Console.Clear();
+            }
+            else if (command == "wc")
             {
-                Command.Wc(CurrentFolder,inputCmdArgs,Path,String.Empty);
+                Command.Wc(CurrentFolder, inputCmdArgs, Path, String.Empty);
             }
 
 
