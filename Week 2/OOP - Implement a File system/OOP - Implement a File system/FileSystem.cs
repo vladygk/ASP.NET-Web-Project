@@ -33,11 +33,11 @@ public class FileSystem
             }
             else if (command == "cat")
             {
-                Command.Cat(CurrentFolder, inputCmdArgs, Path);
+                Command.Cat(CurrentFolder, inputCmdArgs, Path,true);
             }
             else if (command == "tail")
             {
-                Command.Tail(CurrentFolder, inputCmdArgs, Path);
+                Command.Tail(CurrentFolder, inputCmdArgs, Path,true);
             }
             else if (command == "write")
             {

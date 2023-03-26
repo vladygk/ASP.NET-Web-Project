@@ -1,4 +1,7 @@
-﻿namespace OOP___Implement_a_File_system;
+﻿using System.Collections.Generic;
+using System.Text;
+
+namespace OOP___Implement_a_File_system;
 
 public class Command
 {
@@ -82,66 +85,147 @@ public class Command
         Console.WriteLine($"File {fileName} created");
     }
 
-    public static void Cat(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
+    public static string Cat(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path, bool print)
     {
         string fileName;
+        StringBuilder result = new StringBuilder();
+        fileName = inputCmdArgs[1];
 
         if (inputCmdArgs.Length == 2)
         {
-            fileName = inputCmdArgs[1];
             File? file = FindFile(fileName, CurrentFolder);
 
             if (file == null)
             {
                 Console.WriteLine("File doesn't exist");
+                return String.Empty;
             }
             else
             {
                 foreach (var kvp in file.content)
                 {
-                    Console.WriteLine($"Line {kvp.Key}. {kvp.Value}");
+                    if (print)
+                    {
+                        Console.WriteLine($"Line {kvp.Key}: {kvp.Value}");
+                    }
+
+                    result.AppendLine(kvp.Value);
                 }
             }
         }
         else
         {
-            fileName = inputCmdArgs[4];
-            Wc(CurrentFolder, inputCmdArgs, Path, fileName);
+            // cat fileName | wc
+            string text = Cat(CurrentFolder, inputCmdArgs.Take(2).ToArray(), Path, false);
+
+            Wc(CurrentFolder, inputCmdArgs.Skip(3).ToArray(), Path, text);
         }
+
+        return result.ToString().Trim();
     }
 
-    public static void Tail(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
+    public static string Tail(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path, bool print)
     {
-        string fileName = inputCmdArgs[1];
-        int optionalParam = -1;
-        File? file = FindFile(fileName, CurrentFolder);
+        // tail fileName
+        // tail fileName opt
+        // tail fileName | wc
+        //tail fileName opt | wc
+        //tail fileName | wc -l
+        StringBuilder result = new StringBuilder();
 
-        if (inputCmdArgs.Length == 3)
-        {
-            optionalParam = int.Parse(inputCmdArgs[2]);
-        }
 
-        if (file == null)
+        if (inputCmdArgs.Length == 2)
         {
-            Console.WriteLine("File doesn't exist");
-        }
-        else
-        {
-            List<string> lines;
-            if (optionalParam == -1)
+
+            string fileName = inputCmdArgs[1];
+            File? file = FindFile(fileName, CurrentFolder);
+
+            if (file == null)
             {
-                lines = file.content.Values.Skip(file.content.Count - 10).Take(10).Reverse().ToList();
+                Console.WriteLine("File doesn't exist");
+                return String.Empty;
             }
             else
             {
-                lines = file.content.Values.Skip(file.content.Count - optionalParam).Take(optionalParam).Reverse().ToList();
+                Dictionary<int, string> lines;
+
+                lines = file.content.Skip(file.content.Count - 10).Take(10).Reverse().ToDictionary(x => x.Key, x => x.Value);
+
+                foreach (var line in lines)
+                {
+                    if (print)
+                    {
+                        Console.WriteLine($"Line {line.Key}: {line.Value}");
+                    }
+
+                    result.AppendLine(line.Value);
+                }
             }
 
-            foreach (var line in lines)
+
+
+        }
+        else if (inputCmdArgs.Length == 3)
+        {
+            int optionalParam = int.Parse(inputCmdArgs[2]);
+
+            string fileName = inputCmdArgs[1];
+            File? file = FindFile(fileName, CurrentFolder);
+
+            if (file == null)
             {
-                Console.WriteLine(line);
+                Console.WriteLine("File doesn't exist");
+                return String.Empty;
+            }
+            else
+            {
+                Dictionary<int, string> lines;
+
+                lines = file.content.Skip(file.content.Count - optionalParam).Take(optionalParam).Reverse().ToDictionary(x => x.Key, x => x.Value);
+
+                foreach (var line in lines)
+                {
+                    if (print)
+                    {
+                        Console.WriteLine($"Line {line.Key}: {line.Value}");
+                    }
+
+                    result.AppendLine(line.Value);
+                }
             }
         }
+        else if (inputCmdArgs.Length == 4)
+        {
+            string optionalFileName = Tail(CurrentFolder, inputCmdArgs.Take(2).ToArray(), Path, false);
+
+            Wc(CurrentFolder, inputCmdArgs.Skip(3).ToArray(), Path, optionalFileName);
+        }
+        else if (inputCmdArgs.Length == 5 && inputCmdArgs[2] == "|")
+        {
+            string optionalFileName = Tail(CurrentFolder, inputCmdArgs.Take(2).ToArray(), Path, false);
+
+            Wc(CurrentFolder, inputCmdArgs.Skip(3).ToArray(), Path, optionalFileName);
+        }
+        else if (inputCmdArgs.Length == 5 && inputCmdArgs[3] == "|")
+        {
+            string optionalFileName = Tail(CurrentFolder, inputCmdArgs.Take(3).ToArray(), Path, false);
+
+            Wc(CurrentFolder, inputCmdArgs.Skip(4).ToArray(), Path, optionalFileName);
+        }
+        else if (inputCmdArgs.Length == 6)
+        {
+            string optionalFileName = Tail(CurrentFolder, inputCmdArgs.Take(3).ToArray(), Path, false); //tail file1 opt | wc -l
+
+            Wc(CurrentFolder, inputCmdArgs.Skip(4).ToArray(), Path, optionalFileName);
+        }
+
+
+
+
+
+
+
+        return result.ToString();
     }
 
     public static void Write(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
@@ -151,7 +235,7 @@ public class Command
         string lineContent = String.Join(" ", inputCmdArgs.Skip(3).Take(inputCmdArgs.Length - 3));
         string optionalParam = string.Empty;
 
-        if (inputCmdArgs.Length == 5)
+        if (inputCmdArgs.Length == 5 && inputCmdArgs[4] == "-o")
         {
             optionalParam = inputCmdArgs[4];
         }
@@ -198,22 +282,30 @@ public class Command
 
     public static void Ls(Folder CurrentFolder, string[] inputCmdArgs, Stack<Folder> Path)
     {
-        if (inputCmdArgs.Length == 3 && inputCmdArgs[2] == "desc")
+        if (inputCmdArgs.Length == 3
+            && inputCmdArgs[1] == "--sorted"
+            && inputCmdArgs[2] == "desc")
         {
-            if (inputCmdArgs[1] == "--sorted" && inputCmdArgs[2] == "desc")
-            {
-                Console.WriteLine(String.Join(Environment.NewLine, CurrentFolder
-                    .Folders.OrderByDescending(f => GetSize(f)).Select(f => f.Name)));
 
-                Console.WriteLine(String.Join(Environment.NewLine, CurrentFolder
-                   .Files.OrderByDescending(f => f.Size).Select(f => f.Name)));
-            }
+            Console.WriteLine(String.Join(Environment.NewLine, CurrentFolder
+                .Folders.OrderByDescending(f => GetSize(f)).Select(f => f.Name)));
+
+            Console.WriteLine(String.Join(Environment.NewLine, CurrentFolder
+               .Files.OrderByDescending(f => f.Size).Select(f => f.Name)));
+
         }
-        else if (inputCmdArgs.Length == 4 && inputCmdArgs[2] == "wc")
+        else if (inputCmdArgs.Length == 4 && inputCmdArgs[2] == "wc" && inputCmdArgs[3] == "-l")
         {
             foreach (var file in CurrentFolder.Files)
             {
-                Wc(CurrentFolder, inputCmdArgs, Path, file.Name);
+                Wc(CurrentFolder, inputCmdArgs.Skip(2).ToArray(), Path, file.Name);
+            }
+        }
+        else if (inputCmdArgs.Length == 3 && inputCmdArgs[2] == "wc")
+        {
+            foreach (var file in CurrentFolder.Files)
+            {
+                Wc(CurrentFolder, inputCmdArgs.Skip(2).ToArray(), Path, file.Name);
             }
         }
         else
@@ -233,23 +325,76 @@ public class Command
     {
         string fileName = String.Empty;
 
-        if (optionalFileName != String.Empty)
+        if (inputCmdArgs.Length == 1)
         {
-            fileName = optionalFileName;
+            if (optionalFileName == String.Empty)
+            {
+                Console.WriteLine("Number of words: 0");
+            }
+            else
+            {
+
+                fileName = optionalFileName;
+
+
+                File file = FindFile(fileName, CurrentFolder);
+
+                if (file == null)
+                {
+                    int wordsCount = 0;
+
+                    foreach (var line in fileName.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        wordsCount += line.Split().Length;
+                    }
+
+                    Console.WriteLine($"Number of words: {wordsCount}");
+                }
+                else
+                {
+                    int wordsCount = 0;
+                    foreach (var line in file.content)
+                    {
+                        wordsCount += line.Value.Split(" ").Length;
+                    }
+
+                    Console.WriteLine($"Number of words {wordsCount} in file {fileName}");
+                }
+            }
+
         }
-        else
+        else if (inputCmdArgs.Length == 2 && inputCmdArgs[1] == "-l")
+        {
+            if (optionalFileName == String.Empty)
+            {
+                Console.WriteLine("Number of lines: 0");
+            }
+            else
+            {
+
+                fileName = optionalFileName;
+
+
+                File file = FindFile(fileName, CurrentFolder);
+                if (file == null)
+                {
+                    int countLines = fileName.Split(Environment.NewLine,StringSplitOptions.RemoveEmptyEntries).Length;
+
+                    Console.WriteLine($"Number of lines: {countLines}");
+                }
+                else
+                {
+                    Console.WriteLine($"Number of lines in file: {file.Size}");
+                }
+            }
+        }
+        else if (inputCmdArgs.Length == 2 && inputCmdArgs[1] != "-l")
         {
             fileName = inputCmdArgs[1];
-
-        }
-
-        if (fileName == "-l")
-        {
-            fileName = inputCmdArgs[2];
             File file = FindFile(fileName, CurrentFolder);
             if (file == null)
             {
-                int countLines = string.Join(" ", inputCmdArgs.Skip(1).Take(inputCmdArgs.Length - 1)).Split(Environment.NewLine).Length;
+                int countLines = string.Join(" ", inputCmdArgs.Skip(2).Take(inputCmdArgs.Length - 2)).Split(Environment.NewLine).Length;
                 Console.WriteLine($"Number of lines {countLines}");
             }
             else
@@ -257,24 +402,22 @@ public class Command
                 Console.WriteLine($"Number of lines in file: {file.Size}");
             }
         }
-        else
+        else if (inputCmdArgs.Length == 3 && inputCmdArgs[1] == "-l")
         {
-            File file = FindFile(fileName, CurrentFolder);
+            fileName = inputCmdArgs[2];
 
+            File file = FindFile(fileName, CurrentFolder);
             if (file == null)
             {
-                Console.WriteLine(inputCmdArgs.Length - 1);
+                int countLines = string.Join(" ", inputCmdArgs.Skip(1).Take(inputCmdArgs.Length - 1))
+                    .Split(Environment.NewLine).Length;
+                Console.WriteLine($"Number of lines: {countLines}");
             }
             else
             {
-                int wordsCount = 0;
-                foreach (var line in file.content)
-                {
-                    wordsCount += line.Value.Split(" ").Length;
-                }
-
-                Console.WriteLine($"Number of words {wordsCount} in file {fileName}");
+                Console.WriteLine($"Number of lines in file: {file.Size}");
             }
         }
+
     }
 }
