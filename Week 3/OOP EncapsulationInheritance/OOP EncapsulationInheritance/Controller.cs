@@ -9,14 +9,14 @@ public class Controller
     private List<Animal> animals;
     private List<FoodType> food;
 
-    public Controller(List<Animal> animals, List<FoodType> food)
+    public Controller(List<Animal> animals, List<FoodType> food,Random rnd)
     {
         this.animals = animals;
         this.food = food;
-        this.rnd = new Random();
+        this.rnd = rnd;
     }
 
-    private Random rnd { get;  }
+    public  Random rnd { get; set; } 
     public void Simulate()
     {
         while (animals.Any(x => !x.IsDead))

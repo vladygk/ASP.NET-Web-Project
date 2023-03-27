@@ -20,8 +20,8 @@ namespace OOP_EncapsulationInheritance
             food.Add(new Meat());
             food.Add(new Vegetables());
             food.Add(new IceCream());
-
-            Controller simulation = new Controller(animals, food);
+            Random rnd = new Random();
+            Controller simulation = new Controller(animals, food, rnd);
 
             simulation.Simulate();
             string stats = simulation.GetStatistics();
