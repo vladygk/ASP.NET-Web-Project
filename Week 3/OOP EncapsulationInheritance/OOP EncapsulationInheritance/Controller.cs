@@ -13,8 +13,10 @@ public class Controller
     {
         this.animals = animals;
         this.food = food;
+        this.rnd = new Random();
     }
 
+    private Random rnd { get;  }
     public void Simulate()
     {
         while (animals.Any(x => !x.IsDead))
@@ -47,7 +49,7 @@ public class Controller
 
     private FoodType GetRandomFood()
     {
-        Random rnd = new Random();
+       
         int index = rnd.Next(food.Count);
 
         return food[index];

@@ -6,7 +6,7 @@ using OOP_EncapsulationInheritance.Food;
 
 namespace OOP_EncapsulationInheritance
 {
-    internal class StartUp
+    public class StartUp
     {
         static void Main(string[] args)
         {

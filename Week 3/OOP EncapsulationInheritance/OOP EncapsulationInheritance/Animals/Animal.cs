@@ -13,10 +13,10 @@ namespace OOP_EncapsulationInheritance.Animals
            CurrentEnergy = MAXIMUM_ENERGY;
         }
 
-        public int CurrentEnergy { get; set; }
+        private int CurrentEnergy { get; set; }
         
 
-        public Diets Diet { get; set; }
+        protected Diets Diet { get; set; }
         public int LifeSpan { get; set; }
         public bool IsDead  => CurrentEnergy <= 0;
         public void Feed(FoodType food)
