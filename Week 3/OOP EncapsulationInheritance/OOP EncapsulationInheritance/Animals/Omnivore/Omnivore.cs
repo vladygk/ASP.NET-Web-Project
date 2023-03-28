@@ -4,9 +4,14 @@ namespace OOP_EncapsulationInheritance.Animals.Omnivore
 {
     public abstract class Omnivore : Animal
     {
-        static readonly IEnumerable<FoodType> _dietYoung = new HashSet<FoodType>(){new IceCream()};
-        static readonly IEnumerable<FoodType> _dietMature = new HashSet<FoodType>() {new IceCream(),new Pizza() };
+        static readonly IEnumerable<FoodType> _dietYoung;
+        static readonly IEnumerable<FoodType> _dietMature;
 
+        static Omnivore()
+        {
+            _dietYoung = new HashSet<FoodType>() { new IceCream() };
+            _dietMature = new HashSet<FoodType>() { new IceCream(), new Pizza() };
+        }
         private const string animalSound = "Oink-Oink";
         protected override IEnumerable<FoodType> Diet
         {

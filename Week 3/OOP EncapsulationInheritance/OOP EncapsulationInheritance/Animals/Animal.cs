@@ -44,6 +44,7 @@ namespace OOP_EncapsulationInheritance.Animals
                 if (CurrentEnergy > MAXIMUM_ENERGY)
                 {
                     CurrentEnergy = MAXIMUM_ENERGY;
+                   
                 }
                 else
                 {
@@ -53,6 +54,7 @@ namespace OOP_EncapsulationInheritance.Animals
             else
             {
                 CurrentEnergy--;
+                
                 if (IsDead)
                 {
                     CryWhenDead();

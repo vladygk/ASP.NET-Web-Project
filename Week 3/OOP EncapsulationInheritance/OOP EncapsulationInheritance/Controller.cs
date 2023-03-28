@@ -6,6 +6,7 @@ namespace OOP_EncapsulationInheritance;
 
 public class Controller
 {
+
     private List<Animal> animals;
     private List<FoodType> food;
 
@@ -21,6 +22,7 @@ public class Controller
     {
         while (animals.Any(x => !x.IsDead))
         {
+           
             foreach (var animal in animals)
             {
 
