@@ -18,15 +18,19 @@ namespace OOP_EncapsulationInheritance
 
             List<FoodType> food = new List<FoodType>();
             food.Add(new Meat());
-            food.Add(new Vegetables());
+            food.Add(new Vegetable());
             food.Add(new IceCream());
+            food.Add(new Bone());
+            food.Add(new Pizza());
+            food.Add(new Fruit());
             Random rnd = new Random();
             Controller simulation = new Controller(animals, food, rnd);
 
             simulation.Simulate();
             string stats = simulation.GetStatistics();
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(stats);
+            
         }
     }
 }

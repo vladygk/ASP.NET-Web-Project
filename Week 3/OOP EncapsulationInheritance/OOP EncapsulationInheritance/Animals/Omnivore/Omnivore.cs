@@ -1,17 +1,46 @@
-﻿using OOP_EncapsulationInheritance.Enum;
+﻿using OOP_EncapsulationInheritance.Food;
 
 namespace OOP_EncapsulationInheritance.Animals.Omnivore
 {
     public abstract class Omnivore : Animal
     {
-  
-        private const Diets diet = Diets.Omnivore;
+        static readonly IEnumerable<FoodType> _dietYoung = new HashSet<FoodType>(){new IceCream()};
+        static readonly IEnumerable<FoodType> _dietMature = new HashSet<FoodType>() {new IceCream(),new Pizza() };
 
-        protected Omnivore()
+        private const string animalSound = "Oink-Oink";
+        protected override IEnumerable<FoodType> Diet
         {
-            Diet = diet;
+
+            get
+            {
+                if (IsMature)
+                {
+                    return _dietMature;
+                }
+                else
+                {
+                    return _dietYoung;
+                }
+            }
         }
 
+        public override void CryWhenHungry()
+        {
+            Console.ForegroundColor=ConsoleColor.Blue;
+            Console.WriteLine($"{this.GetType().Name} is hungry! {animalSound}");
+        }
 
+        public override void CryWhenDead()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{this.GetType().Name} is dead :((  {animalSound}");
+
+        }
+
+        public override void CryWhenEating()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{this.GetType().Name} is eating! {animalSound}");
+        }
     }
 }

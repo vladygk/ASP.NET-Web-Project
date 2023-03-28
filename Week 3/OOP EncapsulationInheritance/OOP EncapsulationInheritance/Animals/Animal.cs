@@ -1,38 +1,65 @@
-﻿
-using OOP_EncapsulationInheritance.Enum;
-using OOP_EncapsulationInheritance.Food;
+﻿using OOP_EncapsulationInheritance.Food;
 
 namespace OOP_EncapsulationInheritance.Animals
 {
     public abstract class Animal
     {
-      
-        const int MAXIMUM_ENERGY =10;
+
+        const int MAXIMUM_ENERGY = 10;
+
         protected Animal()
         {
-           CurrentEnergy = MAXIMUM_ENERGY;
+            CurrentEnergy = MAXIMUM_ENERGY;
         }
 
         private int CurrentEnergy { get; set; }
+
+        protected virtual IEnumerable<FoodType> Diet { get; set; }
+        public int LifeSpan { get; set; }
+        public bool IsDead => CurrentEnergy <= 0;
+        protected bool IsMature => LifeSpan > 18;
+
+        public bool IsHungry => CurrentEnergy < MAXIMUM_ENERGY / 2;
+        public abstract void CryWhenEating();
         
 
-        protected Diets Diet { get; set; }
-        public int LifeSpan { get; set; }
-        public bool IsDead  => CurrentEnergy <= 0;
+            
+
+        
+
+        public abstract void CryWhenHungry();
+        
+        
+        public abstract void CryWhenDead();
+        
+           
+        
+
         public void Feed(FoodType food)
         {
-            if (food.FoodDiet == Diet)
+
+            if (this.Diet.Contains(food))
             {
                 CurrentEnergy++;
                 if (CurrentEnergy > MAXIMUM_ENERGY)
                 {
-                    CurrentEnergy= MAXIMUM_ENERGY;
+                    CurrentEnergy = MAXIMUM_ENERGY;
+                }
+                else
+                {
+                    CryWhenEating();
                 }
             }
             else
             {
                 CurrentEnergy--;
+                if (IsDead)
+                {
+                    CryWhenDead();
+                }
             }
         }
+
+
     }
 }

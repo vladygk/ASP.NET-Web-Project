@@ -23,9 +23,16 @@ public class Controller
         {
             foreach (var animal in animals)
             {
+
                 if (animal.IsDead)
                 {
+                   
                     continue;
+                }
+
+                if (animal.IsHungry)
+                {
+                    animal.CryWhenHungry();
                 }
 
                 FoodType food = GetRandomFood();

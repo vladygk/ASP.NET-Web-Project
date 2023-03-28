@@ -1,12 +1,7 @@
-﻿using OOP_EncapsulationInheritance.Enum;
-
-namespace OOP_EncapsulationInheritance.Food;
+﻿namespace OOP_EncapsulationInheritance.Food;
 
     public class Meat : FoodType
     {
-        public Meat()
-        {
-            this.FoodDiet = Diets.Carnivore;
-        }
+        protected override string Name  => "Meat";
     }
 
