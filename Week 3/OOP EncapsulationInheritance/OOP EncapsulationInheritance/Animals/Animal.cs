@@ -14,7 +14,7 @@ namespace OOP_EncapsulationInheritance.Animals
 
         private int CurrentEnergy { get; set; }
 
-        protected virtual IEnumerable<FoodType> Diet { get; set; }
+        protected abstract IEnumerable<FoodType> Diet { get;  }
         public int LifeSpan { get; set; }
         public bool IsDead => CurrentEnergy <= 0;
         protected bool IsMature => LifeSpan > 18;
@@ -22,17 +22,10 @@ namespace OOP_EncapsulationInheritance.Animals
         public bool IsHungry => CurrentEnergy < MAXIMUM_ENERGY / 2;
         public abstract void CryWhenEating();
         
-
-            
-
-        
-
         public abstract void CryWhenHungry();
-        
-        
+
         public abstract void CryWhenDead();
         
-           
         
 
         public void Feed(FoodType food)
