@@ -4,16 +4,25 @@ namespace OOP_EncapsulationInheritance.Animals.Carnivore;
 
 public abstract class Carnivore : Animal
 {
-    static readonly HashSet<FoodType> _dietYoung;
-    private static readonly HashSet<FoodType> _dietMature;
-
-     static Carnivore()
+    static readonly HashSet<string> _dietYoung;
+    static readonly HashSet<string> _dietMature;
+    private const int DefaultNutritionalValue = 3;
+    static Carnivore()
     {
-        _dietYoung = new HashSet<FoodType>() { new Meat() };
-        _dietMature =  new HashSet<FoodType>() { new Meat(), new Bone() };
+        _dietYoung = new HashSet<string>() { "Meat", "Zebra" };
+        _dietMature = new HashSet<string>() { "Bone", "Meat","Zebra" };
     }
-    private const string animalSound = "Grrr-Grrr";
-    protected override IEnumerable<FoodType> Diet
+
+    public override int MaximumEnergy { get; set; } = 9;
+
+    protected Carnivore()
+    {
+        CurrentEnergy = MaximumEnergy;
+        NutritionalValue = DefaultNutritionalValue;
+    }
+
+    private const string animalSound = "Mlem-Mlem";
+    protected override IEnumerable<string> Diet
     {
 
         get
@@ -29,22 +38,21 @@ public abstract class Carnivore : Animal
         }
     }
 
-    public override void CryWhenHungry()
+    protected override void MakeSoundWhenHungry()
     {
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine($"{this.GetType().Name} is hungry! {animalSound}");
+        Console.WriteLine($"{this.GetType().Name} is hungry.. {animalSound}");
     }
 
-    public override void CryWhenDead()
+    protected override void MakeSoundWhenDying()
     {
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine($"{this.GetType().Name} is dead :((  {animalSound}");
-       
+        Console.WriteLine($"{this.GetType().Name} is dead.  {animalSound}");
     }
-    public override void CryWhenEating()
+    protected override void MakeSoundWhenEating(string foodName)
     {
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine($"{this.GetType().Name} is eating! {animalSound}");
+        Console.WriteLine($"{this.GetType().Name} is eating a {foodName}! {animalSound}");
     }
 }
 

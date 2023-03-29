@@ -1,60 +1,72 @@
-﻿using OOP_EncapsulationInheritance.Food;
+﻿using OOP_EncapsulationInheritance.Contracts;
+using OOP_EncapsulationInheritance.Food;
 
-namespace OOP_EncapsulationInheritance.Animals
+namespace OOP_EncapsulationInheritance.Animals;
+
+public abstract class Animal : IEatable
 {
-    public abstract class Animal
+    protected virtual IEnumerable<string> Diet { get; }
+    protected bool IsHungry => CurrentEnergy < MaximumEnergy / 2;
+    protected bool IsMature => Age > 18;
+
+    protected abstract void MakeSoundWhenHungry();
+    protected abstract void MakeSoundWhenDying();
+    protected abstract void MakeSoundWhenEating(string foodName);
+
+    public virtual int MaximumEnergy { get; set; }
+    public  int NutritionalValue { get; set; }
+    public int CurrentEnergy { get; set; }
+    public string Name => this.GetType().Name;
+
+    public bool IsEaten { get; set; }
+    public bool IsDead => IsEaten || CurrentEnergy <= 0;
+    public int Age { get; set; }
+    public void RestoreNutritionalValue(){}
+
+
+
+    public void GetEaten()
     {
+        CurrentEnergy = 0;
+        NutritionalValue = 0;
+        IsEaten = true;
+    }
 
-        const int MAXIMUM_ENERGY = 10;
-
-        protected Animal()
+    public void Eat(IEatable food)
+    {
+        if (Diet.Contains(food.Name))
         {
-            CurrentEnergy = MAXIMUM_ENERGY;
-        }
-
-        private int CurrentEnergy { get; set; }
-
-        protected abstract IEnumerable<FoodType> Diet { get;  }
-        public int LifeSpan { get; set; }
-        public bool IsDead => CurrentEnergy <= 0;
-        protected bool IsMature => LifeSpan > 18;
-
-        public bool IsHungry => CurrentEnergy < MAXIMUM_ENERGY / 2;
-        public abstract void CryWhenEating();
-        
-        public abstract void CryWhenHungry();
-
-        public abstract void CryWhenDead();
-        
-        
-
-        public void Feed(FoodType food)
-        {
-
-            if (this.Diet.Contains(food))
+            CurrentEnergy += food.NutritionalValue;
+            if (CurrentEnergy > MaximumEnergy)
             {
-                CurrentEnergy++;
-                if (CurrentEnergy > MAXIMUM_ENERGY)
-                {
-                    CurrentEnergy = MAXIMUM_ENERGY;
-                   
-                }
-                else
-                {
-                    CryWhenEating();
-                }
+                CurrentEnergy = MaximumEnergy;
             }
             else
             {
-                CurrentEnergy--;
-                
-                if (IsDead)
-                {
-                    CryWhenDead();
-                }
+                food.GetEaten();
+                MakeSoundWhenEating(food.Name);
             }
+
+        }
+        else
+        {
+            CurrentEnergy--;
         }
 
+        if (IsHungry)
+        {
+            MakeSoundWhenHungry();
+        }
 
+        if (IsDead)
+        {
+            MakeSoundWhenDying();
+        }
+    }
+
+    public override string ToString()
+    {
+        int energy = CurrentEnergy < 0 ? 0 : CurrentEnergy;
+        return $"{this.Name}-> Energy:{energy} Dead:{IsDead}";
     }
 }

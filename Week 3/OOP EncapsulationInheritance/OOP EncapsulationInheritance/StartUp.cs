@@ -2,6 +2,7 @@
 using OOP_EncapsulationInheritance.Animals.Carnivore;
 using OOP_EncapsulationInheritance.Animals.Herbivore;
 using OOP_EncapsulationInheritance.Animals.Omnivore;
+using OOP_EncapsulationInheritance.Contracts;
 using OOP_EncapsulationInheritance.Food;
 
 namespace OOP_EncapsulationInheritance
@@ -16,7 +17,7 @@ namespace OOP_EncapsulationInheritance
             animals.Add(new Lion());
             animals.Add(new Bear());
 
-            List<FoodType> food = new List<FoodType>();
+            List<IEatable> food = new List<IEatable>();
             food.Add(new Meat());
             food.Add(new Vegetable());
             food.Add(new IceCream());
@@ -24,12 +25,12 @@ namespace OOP_EncapsulationInheritance
             food.Add(new Pizza());
             food.Add(new Fruit());
             Random rnd = new Random();
-            Controller simulation = new Controller(animals, food, rnd);
+            bool getDetailedStatistics = true;
 
-            simulation.Simulate();
-            string stats = simulation.GetStatistics();
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(stats);
+            Simulation simulation = new Simulation(animals, food, rnd, getDetailedStatistics);
+
+            simulation.Start();
+            
             
         }
     }
