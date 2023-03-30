@@ -12,22 +12,11 @@ namespace OOP_EncapsulationInheritance
         static void Main(string[] args)
         {
 
-            List<Animal> animals = new List<Animal>();
-            animals.Add(new Zebra());
-            animals.Add(new Lion());
-            animals.Add(new Bear());
-
-            List<IEatable> food = new List<IEatable>();
-            food.Add(new Meat());
-            food.Add(new Vegetable());
-            food.Add(new IceCream());
-            food.Add(new Bone());
-            food.Add(new Pizza());
-            food.Add(new Fruit());
+            
             Random rnd = new Random();
             bool getDetailedStatistics = true;
 
-            Simulation simulation = new Simulation(animals, food, rnd, getDetailedStatistics);
+            Simulation simulation = new Simulation(rnd, getDetailedStatistics);
 
             simulation.Start();
             
