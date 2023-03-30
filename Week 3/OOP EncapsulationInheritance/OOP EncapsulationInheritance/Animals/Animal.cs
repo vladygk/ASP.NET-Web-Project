@@ -1,10 +1,13 @@
-﻿using OOP_EncapsulationInheritance.Contracts;
+﻿using System.Diagnostics.CodeAnalysis;
+using OOP_EncapsulationInheritance.Contracts;
 using OOP_EncapsulationInheritance.Food;
 
 namespace OOP_EncapsulationInheritance.Animals;
 
 public abstract class Animal : IEatable
 {
+   
+    
     protected virtual IEnumerable<string> Diet { get; }
     protected bool IsHungry => CurrentEnergy < MaximumEnergy / 2;
     protected bool IsMature => Age > 18;

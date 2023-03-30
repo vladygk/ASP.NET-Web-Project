@@ -1,7 +1,5 @@
-﻿using System.Text;
-using OOP_EncapsulationInheritance.Animals;
+﻿using OOP_EncapsulationInheritance.Animals;
 using OOP_EncapsulationInheritance.Contracts;
-using OOP_EncapsulationInheritance.Factories;
 
 
 namespace OOP_EncapsulationInheritance;
@@ -15,10 +13,14 @@ public class Simulation
     private readonly List<IEatable> _food;
     private readonly bool _detailedStats;
     private readonly Random _random;
+    private readonly IBiom _biom;
+    private readonly IStatistics _statistics;
 
-    public Simulation(Random random, bool detailedStats)
+    public Simulation(Random random, IStatistics statistics, IBiom biom, bool detailedStats)
     {
-        (IEnumerable<Animal> animals, IEnumerable<IEatable> food) = this.GenerateAnimalsAndFood();
+        this._biom = biom;
+        this._statistics = statistics;
+        (IEnumerable<Animal> animals, IEnumerable<IEatable> food) = biom.GenerateBiom();
         this._animals = animals.ToList();
         this._food = food.ToList();
         this._random = random;
@@ -31,7 +33,9 @@ public class Simulation
         while (_animals.Any(x => !x.IsDead))
         {
             dayCounter++;
-            GetDailyStatistics();
+
+            _statistics.GenerateDailyStatistics(dayCounter, this._animals, _detailedStats);
+
             foreach (var animal in _animals)
             {
                 if (animal.IsDead)
@@ -56,9 +60,9 @@ public class Simulation
 
             RegenerateFood();
         }
-        GetDailyStatistics();
+        _statistics.GenerateDailyStatistics(dayCounter, this._animals, _detailedStats);
 
-        GetStatistics();
+        _statistics.GenerateStatistics(this._animals);
     }
 
     public IEatable GetRandomFood()
@@ -74,76 +78,6 @@ public class Simulation
             food.RestoreNutritionalValue();
         }
     }
-
-    private void GetStatistics()
-    {
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine();
-        Console.WriteLine($"Maximum age: {_animals.Max(x => x.Age)}");
-        Console.WriteLine($"Minimum age: {_animals.Min(x => x.Age)}");
-        Console.WriteLine($"Average age: {_animals.Average(x => x.Age):f0}");
-
-    }
-
-    private void GetDailyStatistics()
-    {
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine($"Day: {dayCounter}");
-        Console.WriteLine();
-        if (_detailedStats)
-        {
-            Console.WriteLine($"Animals alive: {_animals.Count(a => !a.IsDead)}");
-            Console.WriteLine($"Animals dead: {_animals.Count(a => a.IsDead)}");
-        }
-
-        Console.WriteLine();
-        foreach (var animal in _animals)
-        {
-            Console.WriteLine(animal);
-        }
-
-        Console.WriteLine();
-
-    }
-
-    private (IEnumerable<Animal> animals, IEnumerable<IEatable> food) GenerateAnimalsAndFood()
-    {
-        Console.WriteLine("Desired number of Lions:");
-        int lionNum = int.Parse(Console.ReadLine());
-        Console.WriteLine("Desired number of Bears:");
-        int bearNum = int.Parse(Console.ReadLine());
-        Console.WriteLine("Desired number of Zebras:");
-        int zebraNum = int.Parse(Console.ReadLine());
-
-
-        List<IEatable> food = new List<IEatable>();
-        food.Add(FoodFactory.CreateBone());
-        food.Add(FoodFactory.CreatePizza());
-        food.Add(FoodFactory.CreateFruit());
-        food.Add(FoodFactory.CreateMeat());
-        food.Add(FoodFactory.CreateIceCream());
-        food.Add(FoodFactory.CreateVegetable());
-
-        List<Animal> animals = new List<Animal>();
-
-        for (int i = 0; i < lionNum; i++)
-        {
-            animals.Add(AnimalFactory.CreateLion());
-        }
-        for (int i = 0; i < bearNum; i++)
-        {
-            animals.Add(AnimalFactory.CreateBear());
-        }
-        for (int i = 0; i < zebraNum; i++)
-        {
-            Animal z = AnimalFactory.CreateZebra();
-            animals.Add(z);
-            food.Add(z);
-        }
-
-        return (animals, food);
-    }
-
 
 }
 

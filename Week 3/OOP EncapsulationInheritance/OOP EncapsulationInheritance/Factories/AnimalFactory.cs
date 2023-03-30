@@ -2,7 +2,7 @@
 using OOP_EncapsulationInheritance.Animals.Carnivore;
 using OOP_EncapsulationInheritance.Animals.Herbivore;
 using OOP_EncapsulationInheritance.Animals.Omnivore;
-using OOP_EncapsulationInheritance.Contracts;
+
 
 namespace OOP_EncapsulationInheritance.Factories
 {
