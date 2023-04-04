@@ -1,4 +1,7 @@
-﻿using OOP_EncapsulationInheritance.Contracts;
+﻿using OOP_EncapsulationInheritance.Behaviour;
+using OOP_EncapsulationInheritance.Biomes;
+using OOP_EncapsulationInheritance.IO;
+using OOP_EncapsulationInheritance.Statistics;
 
 namespace OOP_EncapsulationInheritance
 {
@@ -6,15 +9,18 @@ namespace OOP_EncapsulationInheritance
     {
        
 
-        static void Main(string[] args)
+        static void Main()
         {
 
             
             Random rnd = new Random();
             bool getDetailedStatistics = true;
             IStatistics statistics = new ConsoleStatistics();
-            IBiom biom = new Biom();
-            Simulation simulation = new Simulation(rnd,statistics,biom, getDetailedStatistics);
+            IWriter writer = ConsoleWriter.Instance;
+            IBehaviour behaviour = new BehaviourEnglish();
+            IBiome normalBiome = new NormalBiome();
+
+            Simulation simulation = new Simulation(rnd,statistics, normalBiome, writer,getDetailedStatistics, behaviour);
 
             simulation.Start();
             

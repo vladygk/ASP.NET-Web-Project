@@ -1,75 +1,131 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using OOP_EncapsulationInheritance.Contracts;
-using OOP_EncapsulationInheritance.Food;
+﻿namespace OOP_EncapsulationInheritance.Animals;
 
-namespace OOP_EncapsulationInheritance.Animals;
+using Diets;
+using Contracts;
 
 public abstract class Animal : IEatable
 {
-   
-    
-    protected virtual IEnumerable<string> Diet { get; }
-    protected bool IsHungry => CurrentEnergy < MaximumEnergy / 2;
-    protected bool IsMature => Age > 18;
 
-    protected abstract void MakeSoundWhenHungry();
-    protected abstract void MakeSoundWhenDying();
-    protected abstract void MakeSoundWhenEating(string foodName);
-
-    public virtual int MaximumEnergy { get; set; }
-    public  int NutritionalValue { get; set; }
-    public int CurrentEnergy { get; set; }
-    public string Name => this.GetType().Name;
-
-    public bool IsEaten { get; set; }
-    public bool IsDead => IsEaten || CurrentEnergy <= 0;
-    public int Age { get; set; }
-    public void RestoreNutritionalValue(){}
+    private int maxEnergy;
+    private int currentEnergy;
+    private readonly IDiet diet;
 
 
 
-    public void GetEaten()
+    protected Animal(int maxEnergy, int nutritionalValue, string animalSound, IDiet diet)
     {
-        CurrentEnergy = 0;
-        NutritionalValue = 0;
-        IsEaten = true;
+        this.maxEnergy = maxEnergy;
+
+        this.currentEnergy = maxEnergy;
+
+        this.NutritionalValue = nutritionalValue;
+        this.AnimalSound = animalSound;
+        this.diet = diet;
+
     }
-
-    public void Eat(IEatable food)
+    public HashSet<string> CurrentDiet
     {
-        if (Diet.Contains(food.Name))
+        get
         {
-            CurrentEnergy += food.NutritionalValue;
-            if (CurrentEnergy > MaximumEnergy)
+            if (IsMature)
             {
-                CurrentEnergy = MaximumEnergy;
+                return diet.DietMatureAnimal.ToHashSet();
             }
             else
             {
-                food.GetEaten();
-                MakeSoundWhenEating(food.Name);
+                return diet.DietYoungAnimal.ToHashSet();
             }
+        }
+    }
+
+
+
+    public int CurrentEnergy
+    {
+        get => currentEnergy;
+        set
+        {
+            if (currentEnergy > maxEnergy)
+            {
+                currentEnergy = maxEnergy;
+            }
+            else
+            {
+                currentEnergy = value;
+            }
+        }
+    }
+
+
+    public int NutritionalValue { get; set; }
+
+    public string Name => this.GetType().Name;
+
+    public int Age { get; set; }
+
+    public bool IsHungry => CurrentEnergy < this.maxEnergy / 2;
+
+    protected bool IsMature => Age > 18;
+
+    public bool IsEaten => this.NutritionalValue == 0;
+
+    public bool IsDead => IsEaten || CurrentEnergy <= 0;
+
+    public string AnimalSound { get; set; }
+
+
+
+    public void RestoreNutritionalValue() { }
+
+    public int GetEaten(int amountEaten)
+    {
+        int nutritionalValueGiven;
+
+        if (amountEaten > this.NutritionalValue)
+        {
+            nutritionalValueGiven = this.NutritionalValue;
+            this.NutritionalValue = 0;
 
         }
         else
         {
-            CurrentEnergy--;
+            this.NutritionalValue -= amountEaten;
+            nutritionalValueGiven = amountEaten;
         }
 
-        if (IsHungry)
+        return nutritionalValueGiven;
+
+
+    }
+
+    public bool Eat(IEatable food)
+    {
+
+        if (CurrentDiet.Contains(food.Name))
         {
-            MakeSoundWhenHungry();
+
+            int amountCanEat = this.maxEnergy - this.CurrentEnergy;
+
+            this.CurrentEnergy += food.GetEaten(amountCanEat);
+
+
+
+            return true;
+
         }
 
-        if (IsDead)
-        {
-            MakeSoundWhenDying();
-        }
+        this.CurrentEnergy--;
+        return false;
+
     }
 
     public override string ToString()
     {
-        int energy = CurrentEnergy < 0 ? 0 : CurrentEnergy;
-        return $"{this.Name}-> Energy:{energy} Dead:{IsDead}";
+        int energy = this.CurrentEnergy < 0 ? 0 : this.CurrentEnergy;
+        return $"{this.Name}-> Energy:{energy} Dead:{this.IsDead}";
     }
+
+    public abstract Animal Instantiate(IDiet diet);
+
+
 }

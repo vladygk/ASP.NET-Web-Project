@@ -1,42 +1,46 @@
 ﻿using OOP_EncapsulationInheritance.Animals;
+using OOP_EncapsulationInheritance.Behaviour;
+using OOP_EncapsulationInheritance.Biomes;
 using OOP_EncapsulationInheritance.Contracts;
-
+using OOP_EncapsulationInheritance.IO;
+using OOP_EncapsulationInheritance.Statistics;
 
 namespace OOP_EncapsulationInheritance;
 
 public class Simulation
 {
+    private const int NumberOfAnimals = 3;
     private int dayCounter = 0;
 
+    private readonly List<Animal> animals;
+    private readonly List<IEatable> food;
+    private readonly bool detailedStats;
+    private readonly Random random;
+    private readonly IBiome biome;
+    private readonly IStatistics statistics;
+    private readonly IWriter writer;
+    private readonly IBehaviour behaviour;
 
-    private readonly List<Animal> _animals;
-    private readonly List<IEatable> _food;
-    private readonly bool _detailedStats;
-    private readonly Random _random;
-    private readonly IBiom _biom;
-    private readonly IStatistics _statistics;
-
-    public Simulation(Random random, IStatistics statistics, IBiom biom, bool detailedStats)
+    public Simulation(Random random, IStatistics statistics, IBiome biome, IWriter writer, bool detailedStats, IBehaviour behaviour)
     {
-        this._biom = biom;
-        this._statistics = statistics;
-        (IEnumerable<Animal> animals, IEnumerable<IEatable> food) = biom.GenerateBiom();
-        this._animals = animals.ToList();
-        this._food = food.ToList();
-        this._random = random;
-        this._detailedStats = detailedStats;
+        this.biome = biome;
+        this.statistics = statistics;
+        (IEnumerable<Animal> animals, IEnumerable<IEatable> food) = this.biome.GenerateBiom(NumberOfAnimals);
+        this.animals = animals.ToList();
+        this.food = food.ToList();
+        this.random = random;
+        this.detailedStats = detailedStats;
+        this.writer = writer;
+        this.behaviour = behaviour;
     }
 
 
     public void Start()
     {
-        while (_animals.Any(x => !x.IsDead))
+        while (animals.Any(x => !x.IsDead))
         {
-            dayCounter++;
 
-            _statistics.GenerateDailyStatistics(dayCounter, this._animals, _detailedStats);
-
-            foreach (var animal in _animals)
+            foreach (var animal in animals)
             {
                 if (animal.IsDead)
                 {
@@ -48,32 +52,60 @@ public class Simulation
                 {
                     continue;
                 }
-                animal.Eat(currentFood);
+                bool hasEaten = animal.Eat(currentFood);
 
-                if (!animal.IsDead)
+                if (hasEaten)
+                {
+                    string eatingMessage = this.behaviour.MakeSoundWhenEating(animal.Name, animal.AnimalSound);
+
+                    this.writer.Write(eatingMessage);
+                }
+                
+                if (animal.IsHungry)
+                {
+                    string hungryMessage = this.behaviour.MakeSoundWhenHungry(animal.Name, animal.AnimalSound);
+
+                    this.writer.Write(hungryMessage);
+                }
+
+
+
+
+
+                if (animal.IsDead)
+                {
+                    string deathMessage = this.behaviour.MakeSoundWhenDying(animal.Name, animal.AnimalSound);
+
+                    this.writer.Write(deathMessage);
+
+                }
+                else
                 {
                     animal.Age++;
-
                 }
             }
 
+            dayCounter++;
+            string dailyStatistics = statistics.GenerateDailyStatistics(dayCounter, this.animals, detailedStats);
+            this.writer.Write(dailyStatistics);
 
             RegenerateFood();
         }
-        _statistics.GenerateDailyStatistics(dayCounter, this._animals, _detailedStats);
 
-        _statistics.GenerateStatistics(this._animals);
+
+        string generalStatistics = statistics.GenerateStatistics(this.animals);
+        this.writer.Write(generalStatistics);
     }
 
-    public IEatable GetRandomFood()
+    private IEatable GetRandomFood()
     {
-        int randomIndex = _random.Next(_food.Count);
-        return this._food[randomIndex];
+        int randomIndex = random.Next(food.Count);
+        return this.food[randomIndex];
     }
 
-    public void RegenerateFood()
+    private void RegenerateFood()
     {
-        foreach (var food in _food)
+        foreach (var food in food)
         {
             food.RestoreNutritionalValue();
         }

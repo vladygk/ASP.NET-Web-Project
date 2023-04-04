@@ -10,9 +10,20 @@ public abstract class Food : IEatable
     public bool IsEaten { get; set; }
     public abstract void RestoreNutritionalValue();
     
-    public void GetEaten()
+    public int GetEaten(int amountEaten)
     {
+       
+      
+        if (amountEaten > this.NutritionalValue)
+        {
+            return this.NutritionalValue;
+        }
+
         NutritionalValue = 0;
+        return amountEaten;
     }
+
+    public abstract IEatable Instantiate();
+
 }
 

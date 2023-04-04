@@ -4,9 +4,9 @@ public interface IEatable
 {
     public string Name{ get; }
     public int NutritionalValue{ get; set; }
-    public bool IsEaten{ get; set; }
+    public bool IsEaten{ get; }
 
     public void RestoreNutritionalValue();
-    public void GetEaten();
+    public int GetEaten(int amountEaten);
 
 }

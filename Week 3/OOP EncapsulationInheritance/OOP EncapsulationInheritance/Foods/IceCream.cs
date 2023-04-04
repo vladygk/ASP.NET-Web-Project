@@ -1,4 +1,6 @@
-﻿namespace OOP_EncapsulationInheritance.Food;
+﻿using OOP_EncapsulationInheritance.Contracts;
+
+namespace OOP_EncapsulationInheritance.Food;
 public class IceCream : Food
 {
     private const int DefaultNutritionalValue = 2;
@@ -12,4 +14,8 @@ public class IceCream : Food
         }
     }
 
+    public override IEatable Instantiate()
+    {
+        return new IceCream();
+    }
 }

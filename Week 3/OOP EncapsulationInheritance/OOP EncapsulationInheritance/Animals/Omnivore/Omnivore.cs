@@ -1,57 +1,18 @@
-﻿using OOP_EncapsulationInheritance.Food;
+﻿namespace OOP_EncapsulationInheritance.Animals.Omnivore;
 
-namespace OOP_EncapsulationInheritance.Animals.Omnivore;
+using Behaviour;
+using Diets;
+using IO;
+public abstract class Omnivore : Animal
+{
+    private const int DefaultNutritionalValue = 4;
+    private const int DefaultMaxEnergy = 12;
+    private const string DefaultSound = "Oink-Oink";
 
-    public abstract class Omnivore : Animal
+    protected Omnivore(IDiet diet)
+        : base(DefaultMaxEnergy, DefaultNutritionalValue, DefaultSound, diet)
     {
-        static readonly HashSet<string> _dietYoung;
-        static readonly HashSet<string> _dietMature;
-        private const int DefaultNutritionalValue = 4;
-        static Omnivore()
-        {
-            _dietYoung = new HashSet<string>() { "IceCream" };
-            _dietMature = new HashSet<string>() { "IceCream", "Pizza" };
-        }
 
-    public override int MaximumEnergy { get; set; } = 12;
-
-    protected Omnivore()
-    {
-        CurrentEnergy = MaximumEnergy;
-        NutritionalValue = DefaultNutritionalValue;
     }
 
-    private const string animalSound = "Mlem-Mlem";
-        protected override IEnumerable<string> Diet
-        {
-
-            get
-            {
-                if (IsMature)
-                {
-                    return _dietMature;
-                }
-                else
-                {
-                    return _dietYoung;
-                }
-            }
-        }
-
-        protected override void MakeSoundWhenHungry()
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{this.GetType().Name} is hungry.. {animalSound}");
-        }
-
-        protected override void MakeSoundWhenDying()
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{this.GetType().Name} is dead.  {animalSound}");
-        }
-        protected override void MakeSoundWhenEating(string foodName)
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{this.GetType().Name} is eating a {foodName}! {animalSound}");
-        }
-    }
+}

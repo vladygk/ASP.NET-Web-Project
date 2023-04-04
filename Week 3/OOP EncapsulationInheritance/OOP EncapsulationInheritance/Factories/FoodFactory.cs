@@ -1,37 +1,23 @@
-﻿using OOP_EncapsulationInheritance.Contracts;
-using OOP_EncapsulationInheritance.Food;
+﻿
+namespace OOP_EncapsulationInheritance.Factories;
 
-namespace OOP_EncapsulationInheritance.Factories
-{
-    internal class FoodFactory
+using Contracts;
+
+using Food;
+    public class FoodFactory
     {
-       
-        public static IEatable CreateBone()
-        {
-            return new Bone();
-        }
-        public static IEatable CreateFruit()
-        {
-            return new Fruit();
-        }
-        public static IEatable CreateVegetable()
-        {
-            return new Vegetable();
-        }
+        private readonly Dictionary<string, Func<IEatable>> foodTypes;
 
-        public static IEatable CreateMeat()
+        public FoodFactory(Dictionary<string, Func<IEatable>> foodTypes)
         {
-            return new Meat();
+            this.foodTypes = foodTypes;
         }
-        public static IEatable CreatePizza()
+        public  IEatable Create(string foodName)
         {
-            return new Pizza();
+            return foodTypes[foodName].Invoke();
         }
-        public static IEatable CreateIceCream()
-        {
-            return new IceCream();
-        }
+        
 
 
     }
-}
+

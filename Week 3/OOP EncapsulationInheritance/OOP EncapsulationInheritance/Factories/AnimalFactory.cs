@@ -1,29 +1,24 @@
 ﻿using OOP_EncapsulationInheritance.Animals;
-using OOP_EncapsulationInheritance.Animals.Carnivore;
-using OOP_EncapsulationInheritance.Animals.Herbivore;
-using OOP_EncapsulationInheritance.Animals.Omnivore;
-
+using OOP_EncapsulationInheritance.Diets;
 
 namespace OOP_EncapsulationInheritance.Factories
 {
-    internal class AnimalFactory
+    public class AnimalFactory
     {
+        private readonly Dictionary<string, Func<IDiet, Animal>> animalTypes;
 
-
-        public static Animal CreateLion()
+        
+        public AnimalFactory(Dictionary<string, Func<IDiet, Animal>> animalTypes)
         {
-            return new Lion();
+            this.animalTypes = animalTypes;
         }
 
-        public static Animal CreateBear()
+        public  Animal Create(string animalName, IDiet diet)
         {
-            return new Bear();
+            return animalTypes[animalName].Invoke(diet);
         }
 
-        public static Animal CreateZebra()
-        {
-            return new Zebra();
-        }
+       
 
     }
 }

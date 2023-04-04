@@ -1,4 +1,6 @@
-﻿namespace OOP_EncapsulationInheritance.Food;
+﻿using OOP_EncapsulationInheritance.Contracts;
+
+namespace OOP_EncapsulationInheritance.Food;
 
 public class Pizza : Food
 {
@@ -10,6 +12,11 @@ public class Pizza : Food
         {
             NutritionalValue++;
         }
+    }
+
+    public override IEatable Instantiate()
+    {
+        return new Pizza();
     }
 }
 
