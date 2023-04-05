@@ -2,7 +2,7 @@
 
 using Behaviour;
 using Diets;
-using IO;
+
 public abstract class Omnivore : Animal
 {
     private const int DefaultNutritionalValue = 4;

@@ -57,14 +57,14 @@ public class NormalBiome : IBiome
             {"meat", new Meat().Instantiate},
             {"iceCream", new IceCream().Instantiate},
             {"pizza", new Pizza().Instantiate},
-            //{"vegetable", new Vegetable().Instantiate},
+            {"vegetable", new Vegetable().Instantiate},
             {"fruit", new Fruit().Instantiate},
         };
 
         this.animalFactory = new AnimalFactory(animalTypes);
         this.foodFactory = new FoodFactory(foodTypes);
     }
-    public (IEnumerable<Animal>, IEnumerable<IEatable>) GenerateBiom(int numberOfAnimals)
+    public (List<Animal>, List<IEatable>) GenerateBiom(int numberOfAnimals)
     {
         
 
@@ -94,5 +94,10 @@ public class NormalBiome : IBiome
         }
 
         return (animals, food);
+    }
+
+    public IBiome Instantiate()
+    {
+        return new NormalBiome();
     }
 }

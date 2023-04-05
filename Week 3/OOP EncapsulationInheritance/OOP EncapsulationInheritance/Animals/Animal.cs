@@ -119,11 +119,7 @@ public abstract class Animal : IEatable
 
     }
 
-    public override string ToString()
-    {
-        int energy = this.CurrentEnergy < 0 ? 0 : this.CurrentEnergy;
-        return $"{this.Name}-> Energy:{energy} Dead:{this.IsDead}";
-    }
+   
 
     public abstract Animal Instantiate(IDiet diet);
 

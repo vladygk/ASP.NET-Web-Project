@@ -1,9 +1,5 @@
-﻿using OOP_EncapsulationInheritance.Animals.Omnivore;
-using OOP_EncapsulationInheritance.Behaviour;
-using OOP_EncapsulationInheritance.Diets;
-using OOP_EncapsulationInheritance.IO;
-
-namespace OOP_EncapsulationInheritance.Animals.Herbivore;
+﻿namespace OOP_EncapsulationInheritance.Animals.Herbivore;
+using Diets;
 
 public class Zebra : Herbivore
 {

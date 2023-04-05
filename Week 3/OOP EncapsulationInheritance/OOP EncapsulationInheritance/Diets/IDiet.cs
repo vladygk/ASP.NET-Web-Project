@@ -1,6 +1,4 @@
-﻿using OOP_EncapsulationInheritance.Contracts;
-
-namespace OOP_EncapsulationInheritance.Diets;
+﻿namespace OOP_EncapsulationInheritance.Diets;
 
 public interface IDiet
 {

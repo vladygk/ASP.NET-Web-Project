@@ -1,10 +1,9 @@
 ﻿namespace OOP_EncapsulationInheritance.Food;
-
 using Contracts;
-public class Vegetable : Food
+
+public class Seaweed : Food
 {
-  
-    private const int DefaultNutritionalValue = 3;
+    private const int DefaultNutritionalValue = 2;
     public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
     public override void RestoreNutritionalValue()
     {
@@ -16,6 +15,7 @@ public class Vegetable : Food
 
     public override IEatable Instantiate()
     {
-        return new Vegetable();
+        return new Seaweed();
     }
 }
+

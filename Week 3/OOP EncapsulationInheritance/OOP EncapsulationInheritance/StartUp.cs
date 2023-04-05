@@ -1,10 +1,9 @@
-﻿using OOP_EncapsulationInheritance.Behaviour;
-using OOP_EncapsulationInheritance.Biomes;
-using OOP_EncapsulationInheritance.IO;
-using OOP_EncapsulationInheritance.Statistics;
+﻿namespace OOP_EncapsulationInheritance;
 
-namespace OOP_EncapsulationInheritance
-{
+using Behaviour;
+using Biomes;
+using IO;
+using Statistics;
     public class StartUp
     {
        
@@ -14,17 +13,24 @@ namespace OOP_EncapsulationInheritance
 
             
             Random rnd = new Random();
+           
             bool getDetailedStatistics = true;
-            IStatistics statistics = new ConsoleStatistics();
+            IStatistics statistics = new EnglishStatistics();
             IWriter writer = ConsoleWriter.Instance;
             IBehaviour behaviour = new BehaviourEnglish();
-            IBiome normalBiome = new NormalBiome();
 
-            Simulation simulation = new Simulation(rnd,statistics, normalBiome, writer,getDetailedStatistics, behaviour);
+            var biomeTypes = new Func<IBiome>[]
+            {
+                new NormalBiome().Instantiate,
+                new OceanBiome().Instantiate
+            };
+
+            Map map = new Map(2, biomeTypes, rnd);
+
+            Simulation simulation = new Simulation(rnd,statistics, map, writer,getDetailedStatistics, behaviour);
 
             simulation.Start();
             
             
         }
     }
-}

@@ -8,10 +8,7 @@ public class Pizza : Food
     public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
     public override void RestoreNutritionalValue()
     {
-        if (NutritionalValue < DefaultNutritionalValue)
-        {
-            NutritionalValue++;
-        }
+      
     }
 
     public override IEatable Instantiate()

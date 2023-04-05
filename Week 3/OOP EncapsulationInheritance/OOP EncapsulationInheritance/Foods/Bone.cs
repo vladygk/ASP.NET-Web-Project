@@ -9,10 +9,7 @@ public class Bone : Food
 
     public override void RestoreNutritionalValue()
     {
-        if (NutritionalValue < DefaultNutritionalValue)
-        {
-            NutritionalValue++;
-        }
+       
     }
 
     public override IEatable Instantiate()

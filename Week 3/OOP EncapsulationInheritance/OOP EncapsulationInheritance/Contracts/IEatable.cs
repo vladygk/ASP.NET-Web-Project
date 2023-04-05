@@ -6,6 +6,7 @@ public interface IEatable
     public int NutritionalValue{ get; set; }
     public bool IsEaten{ get; }
 
+ 
     public void RestoreNutritionalValue();
     public int GetEaten(int amountEaten);
 

@@ -5,5 +5,7 @@ namespace OOP_EncapsulationInheritance.Biomes;
 
 public interface IBiome
 {
-    public (IEnumerable<Animal>, IEnumerable<IEatable>) GenerateBiom(int numberOfAnimals);
+     (List<Animal>, List<IEatable>) GenerateBiom(int numberOfAnimals);
+
+     IBiome Instantiate();
 }
