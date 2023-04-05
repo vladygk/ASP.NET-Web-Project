@@ -12,7 +12,5 @@ public abstract class Omnivore : Animal
     protected Omnivore(IDiet diet)
         : base(DefaultMaxEnergy, DefaultNutritionalValue, DefaultSound, diet)
     {
-
     }
-
 }
