@@ -4,41 +4,37 @@ using Animals.Carnivore;
 using Animals.Herbivore;
 using Animals.Omnivore;
 using Enums;
-using Food;
+using Foods;
 using Animals;
 using Contracts;
 using Factories;
 
 public class OceanBiome : Biome
 {
-
-
     private AnimalFactory animalFactory;
 
-
-    public OceanBiome(int numberOfAnimals, Map map, Random rnd) : base(numberOfAnimals, map, rnd)
+    public OceanBiome(int numberOfAnimals, Map map, Random rnd)
+        : base(numberOfAnimals, map, rnd)
     {
-        Type = BiomeTypes.OceanBiome;
-        AnimalTypes =
+        this.Type = BiomeTypes.OceanBiome;
+        this.AnimalTypes =
             new Dictionary<IEatableTypes, Func<IBiome, Map, Random, Animal>>()
             {
-                {IEatableTypes.Whale, new Whale(this,map,rnd ).Instantiate },
-                {IEatableTypes.Shark, new Shark(this,map,rnd).Instantiate },
-                {IEatableTypes.Tilapia, new Tilapia(this,map,rnd).Instantiate },
+                { IEatableTypes.Whale, new Whale(this, map, rnd).Instantiate },
+                { IEatableTypes.Shark, new Shark(this, map, rnd).Instantiate },
+                { IEatableTypes.Tilapia, new Tilapia(this, map, rnd).Instantiate },
             };
 
         // Initialize food in Biome
-        Foods = new List<IEatable>()
+        this.Foods = new List<IEatable>()
         {
-            {new Bone()},
+            { new Bone() },
             { new Meat() },
-            {new Seaweed()}
+            { new Seaweed() },
         };
         this.Animals = GenerateAnimals(numberOfAnimals);
-        this.animalFactory = new AnimalFactory(AnimalTypes, map, rnd);
-
+        this.animalFactory = new AnimalFactory(this.AnimalTypes, map, rnd);
     }
-
 
     public override IBiome Instantiate(int numberOfAnimals)
     {

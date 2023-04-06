@@ -1,12 +1,10 @@
-﻿
-namespace OOP_EncapsulationInheritance.Statistics;
+﻿namespace OOP_EncapsulationInheritance.Statistics;
 
 using System.Text;
 using Animals;
 
 public class Statistics : IStatistics
-{
-   
+{ 
     public string GenerateStatistics(IEnumerable<Animal> animals)
     {
         StringBuilder statistics = new StringBuilder();

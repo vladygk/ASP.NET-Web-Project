@@ -1,6 +1,7 @@
-﻿namespace OOP_EncapsulationInheritance.Food;
+﻿namespace OOP_EncapsulationInheritance.Foods;
+
 using Contracts;
-using OOP_EncapsulationInheritance.Enums;
+using Enums;
 
 public class Seaweed : Food
 {
@@ -10,12 +11,14 @@ public class Seaweed : Food
     {
         this.Type = IEatableTypes.Seaweed;
     }
+
     public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
+
     public override void RestoreNutritionalValue()
     {
-        if (NutritionalValue < DefaultNutritionalValue)
+        if (this.NutritionalValue < DefaultNutritionalValue)
         {
-            NutritionalValue++;
+            this.NutritionalValue++;
         }
     }
 
@@ -24,4 +27,3 @@ public class Seaweed : Food
         return new Seaweed();
     }
 }
-

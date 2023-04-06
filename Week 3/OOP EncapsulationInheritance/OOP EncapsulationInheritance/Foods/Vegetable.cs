@@ -1,23 +1,24 @@
-﻿namespace OOP_EncapsulationInheritance.Food;
+﻿namespace OOP_EncapsulationInheritance.Foods;
 
 using Contracts;
-using OOP_EncapsulationInheritance.Enums;
+using Enums;
 
 public class Vegetable : Food
 {
-  
     private const int DefaultNutritionalValue = 3;
 
     public Vegetable()
     {
         this.Type = IEatableTypes.Vegetable;
     }
+
     public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
+
     public override void RestoreNutritionalValue()
     {
-        if (NutritionalValue < DefaultNutritionalValue)
+        if (this.NutritionalValue < DefaultNutritionalValue)
         {
-            NutritionalValue++;
+            this.NutritionalValue++;
         }
     }
 

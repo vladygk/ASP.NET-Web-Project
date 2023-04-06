@@ -1,5 +1,5 @@
-﻿
-namespace OOP_EncapsulationInheritance.Diets;
+﻿namespace OOP_EncapsulationInheritance.Diets;
+
  using Enums;
 
 public interface IDiet
@@ -8,4 +8,3 @@ public interface IDiet
 
     IEnumerable<IEatableTypes> DietYoungAnimal { get; }
 }
-

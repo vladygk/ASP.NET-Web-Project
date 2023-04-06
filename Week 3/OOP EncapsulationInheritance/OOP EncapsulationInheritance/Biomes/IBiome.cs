@@ -4,8 +4,6 @@ using Enums;
 using Contracts;
 using Animals;
 
-
-
 public interface IBiome
 {
     List<Animal> Animals { get; set; }

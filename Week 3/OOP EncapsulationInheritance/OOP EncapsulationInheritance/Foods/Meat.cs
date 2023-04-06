@@ -1,7 +1,7 @@
-﻿
-namespace OOP_EncapsulationInheritance.Food;
+﻿namespace OOP_EncapsulationInheritance.Foods;
+
 using Contracts;
-using OOP_EncapsulationInheritance.Enums;
+using Enums;
 
 public class Meat : Food
 {
@@ -11,11 +11,11 @@ public class Meat : Food
     {
         this.Type = IEatableTypes.Meat;
     }
+
     public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
 
     public override void RestoreNutritionalValue()
     {
-     
     }
 
     public override IEatable Instantiate()
@@ -23,4 +23,3 @@ public class Meat : Food
         return new Meat();
     }
 }
-

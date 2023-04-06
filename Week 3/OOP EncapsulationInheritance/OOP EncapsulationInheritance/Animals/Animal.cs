@@ -9,32 +9,32 @@ using Contracts;
 public abstract class Animal : IEatable
 {
 
-    private int maxEnergy;
-    private int currentEnergy;
-    private readonly IDiet diet;
-    private readonly Map map;
-    private readonly Random rnd;
+    private readonly int _maxEnergy;
+    private readonly IDiet _diet;
+    private int _currentEnergy;
+    private readonly Map _map;
+    private readonly Random _rnd;
 
     public IBiome CurrentBiome { get; set; }
 
     protected Animal(
-        int maxEnergy, 
-        int nutritionalValue, 
-        string animalSound, 
-        IDiet diet, 
+        int maxEnergy,
+        int nutritionalValue,
+        string animalSound,
+        IDiet diet,
         IBiome startBiome,
         Map map,
         Random random)
     {
-        this.maxEnergy = maxEnergy;
+        this._maxEnergy = maxEnergy;
         this.CurrentBiome = startBiome;
-        this.currentEnergy = maxEnergy;
-        this.map = map;
+        this._currentEnergy = maxEnergy;
+        this._map = map;
         this.CurrentBiome = startBiome;
-        this.rnd = random;
+        this._rnd = random;
         this.NutritionalValue = nutritionalValue;
         this.AnimalSound = animalSound;
-        this.diet = diet;
+        this._diet = diet;
 
     }
     public HashSet<IEatableTypes> CurrentDiet
@@ -43,19 +43,50 @@ public abstract class Animal : IEatable
         {
             if (IsMature)
             {
-                return diet.DietMatureAnimal.ToHashSet();
+                return _diet.DietMatureAnimal.ToHashSet();
             }
             else
             {
-                return diet.DietYoungAnimal.ToHashSet();
+                return _diet.DietYoungAnimal.ToHashSet();
             }
         }
     }
 
+    public int CurrentEnergy
+    {
+        get => _currentEnergy;
+        set
+        {
+            if (_currentEnergy > _maxEnergy)
+            {
+                _currentEnergy = _maxEnergy;
+            }
+            else
+            {
+                _currentEnergy = value;
+            }
+        }
+    }
+    public int NutritionalValue { get; set; }
+
+    public IEatableTypes Type { get; set; }
+
+    public int Age { get; set; }
+
+    public bool IsHungry => CurrentEnergy < this._maxEnergy / 2;
+
+    protected bool IsMature => Age > 18;
+
+    public bool IsEaten => this.NutritionalValue == 0;
+
+    public bool IsDead => IsEaten || CurrentEnergy <= 0;
+
+    public string AnimalSound { get; set; }
+
     public void Move()
     {
         List<IBiome> neighbourBiomes = this.GetNeighbours();
-        int index = GetRandomIndex(neighbourBiomes.Count);
+        int index = this.GetRandomIndex(neighbourBiomes.Count);
 
         IBiome biomeToMoveTo = neighbourBiomes[index];
 
@@ -73,9 +104,8 @@ public abstract class Animal : IEatable
 
     private int GetRandomIndex(int neighboursCount)
     {
-        return this.rnd.Next(neighboursCount);
+        return this._rnd.Next(neighboursCount);
     }
-     
     private List<IBiome> GetNeighbours()
     {
         List<IBiome> neighbours = new List<IBiome>();
@@ -84,81 +114,48 @@ public abstract class Animal : IEatable
 
         if (currentX > 0)
         {
-            neighbours.Add(map.GetTiles[currentX-1,currentY]);
+            neighbours.Add(this._map.GetTiles[currentX - 1, currentY]);
         }
 
         if (currentX > 0 && currentY > 0)
         {
-            neighbours.Add(map.GetTiles[currentX - 1, currentY-1]);
+            neighbours.Add(this._map.GetTiles[currentX - 1, currentY - 1]);
         }
 
-        if (currentX > 0 && currentY < map.GetTiles.GetLength(1)-1)
+        if (currentX > 0 && currentY < this._map.GetTiles.GetLength(1) - 1)
         {
-            neighbours.Add(map.GetTiles[currentX - 1, currentY + 1]);
+            neighbours.Add(this._map.GetTiles[currentX - 1, currentY + 1]);
         }
 
         if (currentY > 0)
         {
-            neighbours.Add(map.GetTiles[currentX , currentY - 1]);
+            neighbours.Add(this._map.GetTiles[currentX , currentY - 1]);
         }
 
-        if (currentY < map.GetTiles.GetLength(1) - 1)
+        if (currentY < this._map.GetTiles.GetLength(1) - 1)
         {
-            neighbours.Add(map.GetTiles[currentX, currentY + 1]);
+            neighbours.Add(this._map.GetTiles[currentX, currentY + 1]);
         }
 
-        if (currentX < map.GetTiles.GetLength(0)-1)
+        if (currentX < this._map.GetTiles.GetLength(0)-1)
         {
-            neighbours.Add(map.GetTiles[currentX + 1, currentY]);
+            neighbours.Add(this._map.GetTiles[currentX + 1, currentY]);
         }
 
-        if (currentX < map.GetTiles.GetLength(0) - 1 && currentY > 0)
+        if (currentX < this._map.GetTiles.GetLength(0) - 1 && currentY > 0)
         {
-            neighbours.Add(map.GetTiles[currentX + 1, currentY-1]);
+            neighbours.Add(this._map.GetTiles[currentX + 1, currentY - 1]);
         }
 
-        if (currentX < map.GetTiles.GetLength(0) - 1 && currentY < map.GetTiles.GetLength(1) - 1)
+        if (currentX < this._map.GetTiles.GetLength(0) - 1 && currentY < this._map.GetTiles.GetLength(1) - 1)
         {
-            neighbours.Add(map.GetTiles[currentX + 1, currentY + 1]);
+            neighbours.Add(this._map.GetTiles[currentX + 1, currentY + 1]);
         }
 
         return neighbours;
     }
 
-
-
-    public int CurrentEnergy
-    {
-        get => currentEnergy;
-        set
-        {
-            if (currentEnergy > maxEnergy)
-            {
-                currentEnergy = maxEnergy;
-            }
-            else
-            {
-                currentEnergy = value;
-            }
-        }
-    }
-
-
-    public int NutritionalValue { get; set; }
-
-    public IEatableTypes Type { get;  set; }
-
-    public int Age { get; set; }
-
-    public bool IsHungry => CurrentEnergy < this.maxEnergy / 2;
-
-    protected bool IsMature => Age > 18;
-
-    public bool IsEaten => this.NutritionalValue == 0;
-
-    public bool IsDead => IsEaten || CurrentEnergy <= 0;
-
-    public string AnimalSound { get; set; }
+    
 
 
 
@@ -188,10 +185,10 @@ public abstract class Animal : IEatable
     public bool Eat(IEatable food)
     {
 
-        if (CurrentDiet.Contains(food.Type))
+        if (this.CurrentDiet.Contains(food.Type))
         {
 
-            int amountCanEat = this.maxEnergy - this.CurrentEnergy;
+            int amountCanEat = this._maxEnergy - this.CurrentEnergy;
 
             this.CurrentEnergy += food.GetEaten(amountCanEat);
 

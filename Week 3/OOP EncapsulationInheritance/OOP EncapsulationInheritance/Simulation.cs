@@ -1,7 +1,7 @@
-﻿using OOP_EncapsulationInheritance.Biomes;
-
+﻿
 namespace OOP_EncapsulationInheritance;
 
+using Biomes;
 using Animals;
 using Behaviour;
 using Contracts;
@@ -10,7 +10,7 @@ using Statistics;
 
 public class Simulation
 {
-    
+
     private int dayCounter = 0;
 
     private List<Animal> animals;
@@ -26,7 +26,7 @@ public class Simulation
 
     public Simulation(int numberOfAnimals,
         Random random,
-        IStatistics statistics, 
+        IStatistics statistics,
         Map map, IWriter writer, bool detailedStats, IBehaviour behaviour)
     {
         this.map = map;
@@ -39,7 +39,7 @@ public class Simulation
             allAnimals.AddRange(tile.Animals);
         }
         this.animals = allAnimals;
-       
+
 
         this.random = random;
         this.detailedStats = detailedStats;
@@ -58,28 +58,32 @@ public class Simulation
 
             foreach (var animal in animals)
             {
-              
+
 
                 IEatable currentFood = GetRandomFood(animal);
                 if (currentFood.IsEaten)
                 {
+                    animal.Age++;
                     continue;
                 }
 
                 bool hasEaten = animal.Eat(currentFood);
+
+                animal.Move();
+
+                this.CheckStatus(hasEaten, animal);
                 if (animal.IsDead)
                 {
                     aliveAnimals.Remove(animal);
                     deadAnimals.Add(animal);
-                    
                 }
-                CheckStatus(hasEaten, animal);
+
             }
 
             this.animals = new List<Animal>(aliveAnimals);
-            dayCounter++;
+            this.dayCounter++;
 
-            string dailyStatistics = statistics.GenerateDailyStatistics(dayCounter, animals, detailedStats);
+            string dailyStatistics = statistics.GenerateDailyStatistics(this.dayCounter, animals, detailedStats);
 
             this.writer.Write(dailyStatistics);
             foreach (var tile in this.map.GetTiles)

@@ -2,13 +2,14 @@
 
 using Contracts;
 using Enums;
-using Factories;
 using Animals;
 
 public abstract class Biome : IBiome
 {
     protected Map Map { get; set; }
+
     protected Random Random { get; set; }
+
     protected Biome( int numberOfAnimals, Map map, Random rnd)
     {
         this.Map = map;
@@ -16,27 +17,26 @@ public abstract class Biome : IBiome
     }
 
     public BiomeTypes Type { get; set; }
+
     public (int x, int y) Coordinates { get; set; }
+
     public List<IEatable> Foods { get; set; }
 
     public Dictionary<IEatableTypes, Func<IBiome,Map,Random, Animal>> AnimalTypes { get; set; }
 
-  
-
     public List<Animal> Animals { get; set; }
+
     protected List<Animal> GenerateAnimals(int numberOfAnimals)
     {
         List<Animal> animals = new List<Animal>();
 
         foreach (var animalType in AnimalTypes)
         {
-
             for (int i = 0; i < numberOfAnimals; i++)
             {
-                Animal currentAnimal = animalType.Value.Invoke(this,this.Map,this.Random);
+                Animal currentAnimal = animalType.Value.Invoke(this, this.Map, this.Random);
                 animals.Add(currentAnimal);
-                Foods.Add(currentAnimal);
-
+                this.Foods.Add(currentAnimal);
             }
         }
 
@@ -44,8 +44,4 @@ public abstract class Biome : IBiome
     }
 
     public abstract IBiome Instantiate(int numberOfAnimals);
-
-
-
 }
-

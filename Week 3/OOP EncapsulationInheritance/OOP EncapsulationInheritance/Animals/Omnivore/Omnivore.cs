@@ -1,8 +1,6 @@
-﻿using OOP_EncapsulationInheritance.Biomes;
+﻿namespace OOP_EncapsulationInheritance.Animals.Omnivore;
 
-namespace OOP_EncapsulationInheritance.Animals.Omnivore;
-
-using Behaviour;
+using Biomes;
 using Diets;
 
 public abstract class Omnivore : Animal
@@ -13,12 +11,12 @@ public abstract class Omnivore : Animal
 
     protected Omnivore(IDiet diet,IBiome startBiome, Map map, Random rnd)
         : base(
-            DefaultMaxEnergy, 
-            DefaultNutritionalValue, 
-            DefaultSound, 
-            diet, 
-            startBiome, 
-            map, 
+            DefaultMaxEnergy,
+            DefaultNutritionalValue,
+            DefaultSound,
+            diet,
+            startBiome,
+            map,
             rnd)
     {
     }
