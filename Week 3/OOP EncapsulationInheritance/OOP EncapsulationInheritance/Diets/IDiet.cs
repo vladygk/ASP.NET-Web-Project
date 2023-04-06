@@ -1,9 +1,11 @@
-﻿namespace OOP_EncapsulationInheritance.Diets;
+﻿
+namespace OOP_EncapsulationInheritance.Diets;
+ using Enums;
 
 public interface IDiet
 {
-    IEnumerable<string> DietMatureAnimal { get; }
+    IEnumerable<IEatableTypes> DietMatureAnimal { get; }
 
-    IEnumerable<string> DietYoungAnimal { get; }
+    IEnumerable<IEatableTypes> DietYoungAnimal { get; }
 }
 

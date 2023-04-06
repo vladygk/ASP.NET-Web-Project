@@ -1,8 +1,7 @@
-﻿using OOP_EncapsulationInheritance.Behaviour;
-using OOP_EncapsulationInheritance.Diets;
-using OOP_EncapsulationInheritance.IO;
+﻿namespace OOP_EncapsulationInheritance.Animals.Carnivore;
 
-namespace OOP_EncapsulationInheritance.Animals.Carnivore;
+using Biomes;
+using Diets;
 
 public abstract class Carnivore : Animal
 {
@@ -11,8 +10,15 @@ public abstract class Carnivore : Animal
     private const string DefaultSound = "Grrr-Grrr";
    
 
-    protected Carnivore(IDiet diet)
-        :base(DefaultMaxEnergy,DefaultNutritionalValue, DefaultSound, diet)
+    protected Carnivore(IDiet diet, IBiome startBiome, Map map, Random rnd)
+        :base(
+            DefaultMaxEnergy,
+            DefaultNutritionalValue, 
+            DefaultSound, 
+            diet,
+            startBiome,
+            map,
+            rnd)
     {
     }
     

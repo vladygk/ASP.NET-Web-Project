@@ -1,4 +1,6 @@
-﻿namespace OOP_EncapsulationInheritance;
+﻿using OOP_EncapsulationInheritance.Biomes;
+
+namespace OOP_EncapsulationInheritance;
 
 using Animals;
 using Behaviour;
@@ -8,10 +10,10 @@ using Statistics;
 
 public class Simulation
 {
-    private const int NumberOfAnimals = 3;
+    
     private int dayCounter = 0;
 
-    //private readonly List<Animal> animals;
+    private List<Animal> animals;
     //private readonly List<IEatable> food;
 
     private readonly bool detailedStats;
@@ -21,19 +23,24 @@ public class Simulation
     private readonly IWriter writer;
     private readonly IBehaviour behaviour;
 
-    private List<Animal> animals;
-    private List<IEatable> food;
-    public Simulation(Random random, IStatistics statistics, Map map, IWriter writer, bool detailedStats, IBehaviour behaviour)
+
+    public Simulation(int numberOfAnimals,
+        Random random,
+        IStatistics statistics, 
+        Map map, IWriter writer, bool detailedStats, IBehaviour behaviour)
     {
         this.map = map;
         this.statistics = statistics;
 
+        List<Animal> allAnimals = new List<Animal>();
+        foreach (var tile in this.map.GetTiles)
+        {
+            // add animals from each Biom
+            allAnimals.AddRange(tile.Animals);
+        }
+        this.animals = allAnimals;
+       
 
-
-
-
-        //this.animals = animals.ToList();
-        // this.food = food.ToList();
         this.random = random;
         this.detailedStats = detailedStats;
         this.writer = writer;
@@ -43,84 +50,87 @@ public class Simulation
 
     public void Start()
     {
-        foreach (var tile in this.map.GetTiles)
+
+        List<Animal> aliveAnimals = this.animals;
+        List<Animal> deadAnimals = this.animals;
+        while (animals.Any(x => !x.IsDead))
         {
-            (this.animals,this.food) = tile.GenerateBiom(NumberOfAnimals);
-            var a = tile.GenerateBiom(NumberOfAnimals);
 
-            while (animals.Any(x => !x.IsDead))
+            foreach (var animal in animals)
             {
+              
 
-                foreach (var animal in animals)
+                IEatable currentFood = GetRandomFood(animal);
+                if (currentFood.IsEaten)
                 {
-                    if (animal.IsDead)
-                    {
-                        continue;
-                    }
-
-                    IEatable currentFood = GetRandomFood();
-                    if (currentFood.IsEaten)
-                    {
-                        continue;
-                    }
-
-                    bool hasEaten = animal.Eat(currentFood);
-
-                    if (hasEaten)
-                    {
-                        string eatingMessage = this.behaviour.MakeSoundWhenEating(animal.Name, animal.AnimalSound);
-
-                        this.writer.Write(eatingMessage);
-                    }
-
-                    if (animal.IsHungry)
-                    {
-                        string hungryMessage = this.behaviour.MakeSoundWhenHungry(animal.Name, animal.AnimalSound);
-
-                        this.writer.Write(hungryMessage);
-                    }
-
-
-
-
-
-                    if (animal.IsDead)
-                    {
-                        string deathMessage = this.behaviour.MakeSoundWhenDying(animal.Name, animal.AnimalSound);
-
-                        this.writer.Write(deathMessage);
-
-                    }
-                    else
-                    {
-                        animal.Age++;
-                    }
+                    continue;
                 }
 
-                dayCounter++;
-                string dailyStatistics = statistics.GenerateDailyStatistics(dayCounter, animals, detailedStats);
-                this.writer.Write(dailyStatistics);
-
-                RegenerateFood();
+                bool hasEaten = animal.Eat(currentFood);
+                if (animal.IsDead)
+                {
+                    aliveAnimals.Remove(animal);
+                    deadAnimals.Add(animal);
+                    
+                }
+                CheckStatus(hasEaten, animal);
             }
 
+            this.animals = new List<Animal>(aliveAnimals);
+            dayCounter++;
 
+            string dailyStatistics = statistics.GenerateDailyStatistics(dayCounter, animals, detailedStats);
 
+            this.writer.Write(dailyStatistics);
+            foreach (var tile in this.map.GetTiles)
+            {
+                RegenerateFood(tile);
+            }
+        }
 
-            string generalStatistics = statistics.GenerateStatistics(animals);
-            this.writer.Write(generalStatistics);
+        string generalStatistics = statistics.GenerateStatistics(deadAnimals);
+        this.writer.Write(generalStatistics);
+
+    }
+
+    private void CheckStatus(bool hasEaten, Animal animal)
+    {
+        if (hasEaten)
+        {
+            string eatingMessage = this.behaviour.MakeSoundWhenEating(animal.Type, animal.AnimalSound);
+
+            this.writer.Write(eatingMessage);
+        }
+
+        if (animal.IsHungry)
+        {
+            string hungryMessage = this.behaviour.MakeSoundWhenHungry(animal.Type, animal.AnimalSound);
+
+            this.writer.Write(hungryMessage);
+        }
+
+        if (animal.IsDead)
+        {
+            string deathMessage = this.behaviour.MakeSoundWhenDying(animal.Type, animal.AnimalSound);
+
+            this.writer.Write(deathMessage);
+
+        }
+        else
+        {
+            animal.Age++;
         }
     }
-
-    private IEatable GetRandomFood()
+    private IEatable GetRandomFood(Animal animal)
     {
-        int randomIndex = random.Next(food.Count);
-        return this.food[randomIndex];
+        var currentAnimalBiomeFood = animal.CurrentBiome.Foods;
+        int randomIndex = random.Next(currentAnimalBiomeFood.Count);
+        return currentAnimalBiomeFood[randomIndex];
     }
 
-    private void RegenerateFood()
+    private void RegenerateFood(IBiome biome)
     {
-        foreach (var food in food)
+        foreach (var food in biome.Foods)
         {
             food.RestoreNutritionalValue();
         }

@@ -1,15 +1,29 @@
-﻿namespace OOP_EncapsulationInheritance.Animals.Omnivore
+﻿
+using OOP_EncapsulationInheritance.Biomes;
+
+namespace OOP_EncapsulationInheritance.Animals.Omnivore
 {
+    using Contracts;
     using Diets;
+    using OOP_EncapsulationInheritance.Enums;
+
     public class Whale : Omnivore
     {
-        public Whale(IDiet diet) : base(diet)
+        private static IDiet _diet = new Diet(
+            new HashSet<IEatableTypes>() { IEatableTypes.Seaweed },
+            new HashSet<IEatableTypes>() { IEatableTypes.Seaweed, IEatableTypes.Meat });
+        public Whale(IBiome startBiome, Map map, Random rnd) : base(_diet, startBiome, map, rnd)
         {
+            this.Type = IEatableTypes.Whale;
         }
 
-        public override Animal Instantiate(IDiet diet)
+
+
+        public override Animal Instantiate(IBiome startBiome, Map map, Random rnd)
         {
-            return new Whale(diet);
+            return new Whale(startBiome, map, rnd);
         }
+
+      
     }
 }

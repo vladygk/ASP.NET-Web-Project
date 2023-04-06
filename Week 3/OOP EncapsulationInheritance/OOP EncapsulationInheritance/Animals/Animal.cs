@@ -1,5 +1,8 @@
-﻿namespace OOP_EncapsulationInheritance.Animals;
+﻿
+namespace OOP_EncapsulationInheritance.Animals;
 
+using Biomes;
+using Enums;
 using Diets;
 using Contracts;
 
@@ -9,21 +12,32 @@ public abstract class Animal : IEatable
     private int maxEnergy;
     private int currentEnergy;
     private readonly IDiet diet;
+    private readonly Map map;
+    private readonly Random rnd;
 
+    public IBiome CurrentBiome { get; set; }
 
-
-    protected Animal(int maxEnergy, int nutritionalValue, string animalSound, IDiet diet)
+    protected Animal(
+        int maxEnergy, 
+        int nutritionalValue, 
+        string animalSound, 
+        IDiet diet, 
+        IBiome startBiome,
+        Map map,
+        Random random)
     {
         this.maxEnergy = maxEnergy;
-
+        this.CurrentBiome = startBiome;
         this.currentEnergy = maxEnergy;
-
+        this.map = map;
+        this.CurrentBiome = startBiome;
+        this.rnd = random;
         this.NutritionalValue = nutritionalValue;
         this.AnimalSound = animalSound;
         this.diet = diet;
 
     }
-    public HashSet<string> CurrentDiet
+    public HashSet<IEatableTypes> CurrentDiet
     {
         get
         {
@@ -36,6 +50,79 @@ public abstract class Animal : IEatable
                 return diet.DietYoungAnimal.ToHashSet();
             }
         }
+    }
+
+    public void Move()
+    {
+        List<IBiome> neighbourBiomes = this.GetNeighbours();
+        int index = GetRandomIndex(neighbourBiomes.Count);
+
+        IBiome biomeToMoveTo = neighbourBiomes[index];
+
+        if (biomeToMoveTo.AnimalTypes.ContainsKey(this.Type))
+        {
+            this.CurrentBiome.Animals.Remove(this);
+            this.CurrentBiome.Foods.Remove(this);
+
+            this.CurrentBiome = biomeToMoveTo;
+
+            this.CurrentBiome.Animals.Add(this);
+            this.CurrentBiome.Foods.Add(this);
+        }
+    }
+
+    private int GetRandomIndex(int neighboursCount)
+    {
+        return this.rnd.Next(neighboursCount);
+    }
+     
+    private List<IBiome> GetNeighbours()
+    {
+        List<IBiome> neighbours = new List<IBiome>();
+        int currentX = this.CurrentBiome.Coordinates.x;
+        int currentY = this.CurrentBiome.Coordinates.y;
+
+        if (currentX > 0)
+        {
+            neighbours.Add(map.GetTiles[currentX-1,currentY]);
+        }
+
+        if (currentX > 0 && currentY > 0)
+        {
+            neighbours.Add(map.GetTiles[currentX - 1, currentY-1]);
+        }
+
+        if (currentX > 0 && currentY < map.GetTiles.GetLength(1)-1)
+        {
+            neighbours.Add(map.GetTiles[currentX - 1, currentY + 1]);
+        }
+
+        if (currentY > 0)
+        {
+            neighbours.Add(map.GetTiles[currentX , currentY - 1]);
+        }
+
+        if (currentY < map.GetTiles.GetLength(1) - 1)
+        {
+            neighbours.Add(map.GetTiles[currentX, currentY + 1]);
+        }
+
+        if (currentX < map.GetTiles.GetLength(0)-1)
+        {
+            neighbours.Add(map.GetTiles[currentX + 1, currentY]);
+        }
+
+        if (currentX < map.GetTiles.GetLength(0) - 1 && currentY > 0)
+        {
+            neighbours.Add(map.GetTiles[currentX + 1, currentY-1]);
+        }
+
+        if (currentX < map.GetTiles.GetLength(0) - 1 && currentY < map.GetTiles.GetLength(1) - 1)
+        {
+            neighbours.Add(map.GetTiles[currentX + 1, currentY + 1]);
+        }
+
+        return neighbours;
     }
 
 
@@ -59,7 +146,7 @@ public abstract class Animal : IEatable
 
     public int NutritionalValue { get; set; }
 
-    public string Name => this.GetType().Name;
+    public IEatableTypes Type { get;  set; }
 
     public int Age { get; set; }
 
@@ -101,7 +188,7 @@ public abstract class Animal : IEatable
     public bool Eat(IEatable food)
     {
 
-        if (CurrentDiet.Contains(food.Name))
+        if (CurrentDiet.Contains(food.Type))
         {
 
             int amountCanEat = this.maxEnergy - this.CurrentEnergy;
@@ -121,7 +208,7 @@ public abstract class Animal : IEatable
 
    
 
-    public abstract Animal Instantiate(IDiet diet);
+    public abstract Animal Instantiate(IBiome startBiome, Map map, Random rnd);
 
-
+    
 }

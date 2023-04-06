@@ -1,4 +1,6 @@
-﻿namespace OOP_EncapsulationInheritance;
+﻿using OOP_EncapsulationInheritance.Enums;
+
+namespace OOP_EncapsulationInheritance;
 
 using Behaviour;
 using Biomes;
@@ -15,19 +17,19 @@ using Statistics;
             Random rnd = new Random();
            
             bool getDetailedStatistics = true;
-            IStatistics statistics = new EnglishStatistics();
+        IStatistics statistics = new Statistics.Statistics();
             IWriter writer = ConsoleWriter.Instance;
-            IBehaviour behaviour = new BehaviourEnglish();
+        IBehaviour behaviour = new Behaviour.Behaviour();
 
-            var biomeTypes = new Func<IBiome>[]
-            {
-                new NormalBiome().Instantiate,
-                new OceanBiome().Instantiate
-            };
+            int numberOfElementsForEachType = 2;
+            Map map = new Map(2, rnd,numberOfElementsForEachType);
 
-            Map map = new Map(2, biomeTypes, rnd);
+          
+            
 
-            Simulation simulation = new Simulation(rnd,statistics, map, writer,getDetailedStatistics, behaviour);
+
+
+            Simulation simulation = new Simulation(numberOfElementsForEachType ,rnd,statistics, map, writer,getDetailedStatistics, behaviour);
 
             simulation.Start();
             

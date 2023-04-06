@@ -1,15 +1,14 @@
-﻿using OOP_EncapsulationInheritance.Contracts;
-
-namespace OOP_EncapsulationInheritance.Diets;
+﻿namespace OOP_EncapsulationInheritance.Diets;
+using Enums;
 
 public class Diet : IDiet
 {
-    public Diet(IEnumerable<string> matureDiet, IEnumerable<string> youngDiet)
+    public Diet(IEnumerable<IEatableTypes> matureDiet, IEnumerable<IEatableTypes> youngDiet)
     {
         this.DietMatureAnimal = matureDiet;
         this.DietYoungAnimal = youngDiet;
     }
-    public IEnumerable<string> DietMatureAnimal { get; }
-    public IEnumerable<string> DietYoungAnimal { get; }
+    public IEnumerable<IEatableTypes> DietMatureAnimal { get; }
+    public IEnumerable<IEatableTypes> DietYoungAnimal { get; }
 }
 

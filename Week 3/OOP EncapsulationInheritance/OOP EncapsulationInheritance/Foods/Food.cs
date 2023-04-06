@@ -1,12 +1,12 @@
-﻿using OOP_EncapsulationInheritance.Contracts;
-
-namespace OOP_EncapsulationInheritance.Food;
+﻿namespace OOP_EncapsulationInheritance.Food;
+using Contracts;
+using Enums;
 
 public abstract class Food : IEatable
 {
   
     
-    public string Name => this.GetType().Name;
+    public IEatableTypes Type { get; set; }
     public virtual int NutritionalValue { get; set; }
     public bool IsEaten { get; set; }
 
