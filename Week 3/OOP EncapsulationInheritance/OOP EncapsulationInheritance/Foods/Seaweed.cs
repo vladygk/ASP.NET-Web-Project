@@ -10,9 +10,10 @@ public class Seaweed : Food
     public Seaweed()
     {
         this.Type = IEatableTypes.Seaweed;
+        this.NutritionalValue = DefaultNutritionalValue;
     }
 
-    public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
+    public int NutritionalValue { get; set; }
 
     public override void RestoreNutritionalValue()
     {

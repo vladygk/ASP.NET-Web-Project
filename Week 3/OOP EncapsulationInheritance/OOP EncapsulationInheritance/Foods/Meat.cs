@@ -10,9 +10,10 @@ public class Meat : Food
     public Meat()
     {
         this.Type = IEatableTypes.Meat;
+        this.NutritionalValue = DefaultNutritionalValue;
     }
 
-    public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
+    public int NutritionalValue { get; set; } 
 
     public override void RestoreNutritionalValue()
     {

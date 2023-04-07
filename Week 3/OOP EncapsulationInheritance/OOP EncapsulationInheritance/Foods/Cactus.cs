@@ -3,17 +3,15 @@
 using Contracts;
 using Enums;
 
-public class Vegetable : Food
+public class Cactus : Food
 {
     private const int DefaultNutritionalValue = 3;
 
-    public Vegetable()
+    public Cactus()
     {
-        this.Type = IEatableTypes.Vegetable;
+        this.Type = IEatableTypes.Fruit;
         this.NutritionalValue = DefaultNutritionalValue;
     }
-
-    public  int NutritionalValue { get; set; } 
 
     public override void RestoreNutritionalValue()
     {
@@ -25,6 +23,6 @@ public class Vegetable : Food
 
     public override IEatable Instantiate()
     {
-        return new Vegetable();
+        return new Cactus();
     }
 }

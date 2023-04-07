@@ -9,9 +9,10 @@ public class IceCream : Food
     public IceCream()
     {
         this.Type = IEatableTypes.IceCream;
+        this.NutritionalValue = DefaultNutritionalValue;
     }
 
-    public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
+    public  int NutritionalValue { get; set; } 
 
     public override void RestoreNutritionalValue()
     {

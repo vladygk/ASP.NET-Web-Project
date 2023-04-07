@@ -7,7 +7,7 @@ public abstract class Food : IEatable
 {
     public IEatableTypes Type { get; set; }
 
-    public virtual int NutritionalValue { get; set; }
+    public  int NutritionalValue { get; set; }
 
     public bool IsEaten { get; set; }
 

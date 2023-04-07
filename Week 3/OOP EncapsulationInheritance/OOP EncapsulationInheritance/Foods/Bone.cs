@@ -10,9 +10,10 @@ public class Bone : Food
     public Bone()
     {
         this.Type = IEatableTypes.Bone;
+        this.NutritionalValue = DefaultNutritionalValue;
     }
 
-    public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
+    public int NutritionalValue { get; set; }
 
     public override void RestoreNutritionalValue()
     {

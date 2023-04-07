@@ -27,6 +27,9 @@ public class Map
                     case BiomeTypes.OceanBiome:
                         this._tiles[i, j] = new OceanBiome(numberOfAnimals, this, rnd);
                         break;
+                    case BiomeTypes.DessertBiome:
+                        this._tiles[i, j] = new DessertBiome(numberOfAnimals, this, rnd);
+                        break;
                 }
 
                 this._tiles[i, j].Coordinates = (i, j);

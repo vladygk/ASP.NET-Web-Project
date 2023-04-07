@@ -1,5 +1,4 @@
-﻿
-namespace OOP_EncapsulationInheritance.Animals;
+﻿namespace OOP_EncapsulationInheritance.Animals;
 
 using Biomes;
 using Enums;
@@ -8,12 +7,11 @@ using Contracts;
 
 public abstract class Animal : IEatable
 {
-
     private readonly int _maxEnergy;
     private readonly IDiet _diet;
-    private int _currentEnergy;
     private readonly Map _map;
     private readonly Random _rnd;
+    private int _currentEnergy;
 
     public IBiome CurrentBiome { get; set; }
 
@@ -35,51 +33,52 @@ public abstract class Animal : IEatable
         this.NutritionalValue = nutritionalValue;
         this.AnimalSound = animalSound;
         this._diet = diet;
-
     }
+
     public HashSet<IEatableTypes> CurrentDiet
     {
         get
         {
-            if (IsMature)
+            if (this.IsMature)
             {
-                return _diet.DietMatureAnimal.ToHashSet();
+                return this._diet.DietMatureAnimal.ToHashSet();
             }
             else
             {
-                return _diet.DietYoungAnimal.ToHashSet();
+                return this._diet.DietYoungAnimal.ToHashSet();
             }
         }
     }
 
     public int CurrentEnergy
     {
-        get => _currentEnergy;
+        get => this._currentEnergy;
         set
         {
-            if (_currentEnergy > _maxEnergy)
+            if (this._currentEnergy > this._maxEnergy)
             {
-                _currentEnergy = _maxEnergy;
+                this._currentEnergy = this._maxEnergy;
             }
             else
             {
-                _currentEnergy = value;
+                this._currentEnergy = value;
             }
         }
     }
+
     public int NutritionalValue { get; set; }
 
     public IEatableTypes Type { get; set; }
 
     public int Age { get; set; }
 
-    public bool IsHungry => CurrentEnergy < this._maxEnergy / 2;
+    public bool IsHungry => this.CurrentEnergy < this._maxEnergy / 2;
 
-    protected bool IsMature => Age > 18;
+    protected bool IsMature => this.Age > 18;
 
     public bool IsEaten => this.NutritionalValue == 0;
 
-    public bool IsDead => IsEaten || CurrentEnergy <= 0;
+    public bool IsDead => this.IsEaten || this.CurrentEnergy <= 0;
 
     public string AnimalSound { get; set; }
 
@@ -102,10 +101,49 @@ public abstract class Animal : IEatable
         }
     }
 
+    public void RestoreNutritionalValue() { }
+
+    public int GetEaten(int amountEaten)
+    {
+        int nutritionalValueGiven;
+
+        if (amountEaten > this.NutritionalValue)
+        {
+            nutritionalValueGiven = this.NutritionalValue;
+            this.NutritionalValue = 0;
+        }
+        else
+        {
+            this.NutritionalValue -= amountEaten;
+            nutritionalValueGiven = amountEaten;
+        }
+
+        return nutritionalValueGiven;
+    }
+
+    public bool Eat(IEatable food)
+    {
+
+        if (this.CurrentDiet.Contains(food.Type))
+        {
+            int amountCanEat = this._maxEnergy - this.CurrentEnergy;
+
+            this.CurrentEnergy += food.GetEaten(amountCanEat);
+
+            return true;
+        }
+
+        this.CurrentEnergy--;
+        return false;
+    }
+
+    public abstract Animal Instantiate(IBiome startBiome, Map map, Random rnd);
+
     private int GetRandomIndex(int neighboursCount)
     {
         return this._rnd.Next(neighboursCount);
     }
+
     private List<IBiome> GetNeighbours()
     {
         List<IBiome> neighbours = new List<IBiome>();
@@ -129,7 +167,7 @@ public abstract class Animal : IEatable
 
         if (currentY > 0)
         {
-            neighbours.Add(this._map.GetTiles[currentX , currentY - 1]);
+            neighbours.Add(this._map.GetTiles[currentX, currentY - 1]);
         }
 
         if (currentY < this._map.GetTiles.GetLength(1) - 1)
@@ -137,7 +175,7 @@ public abstract class Animal : IEatable
             neighbours.Add(this._map.GetTiles[currentX, currentY + 1]);
         }
 
-        if (currentX < this._map.GetTiles.GetLength(0)-1)
+        if (currentX < this._map.GetTiles.GetLength(0) - 1)
         {
             neighbours.Add(this._map.GetTiles[currentX + 1, currentY]);
         }
@@ -154,58 +192,4 @@ public abstract class Animal : IEatable
 
         return neighbours;
     }
-
-    
-
-
-
-    public void RestoreNutritionalValue() { }
-
-    public int GetEaten(int amountEaten)
-    {
-        int nutritionalValueGiven;
-
-        if (amountEaten > this.NutritionalValue)
-        {
-            nutritionalValueGiven = this.NutritionalValue;
-            this.NutritionalValue = 0;
-
-        }
-        else
-        {
-            this.NutritionalValue -= amountEaten;
-            nutritionalValueGiven = amountEaten;
-        }
-
-        return nutritionalValueGiven;
-
-
-    }
-
-    public bool Eat(IEatable food)
-    {
-
-        if (this.CurrentDiet.Contains(food.Type))
-        {
-
-            int amountCanEat = this._maxEnergy - this.CurrentEnergy;
-
-            this.CurrentEnergy += food.GetEaten(amountCanEat);
-
-
-
-            return true;
-
-        }
-
-        this.CurrentEnergy--;
-        return false;
-
-    }
-
-   
-
-    public abstract Animal Instantiate(IBiome startBiome, Map map, Random rnd);
-
-    
 }

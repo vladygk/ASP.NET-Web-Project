@@ -10,9 +10,10 @@ public class Pizza : Food
     public Pizza()
     {
         this.Type = IEatableTypes.Pizza;
+        this.NutritionalValue = DefaultNutritionalValue;
     }
 
-    public override int NutritionalValue { get; set; } = DefaultNutritionalValue;
+    public int NutritionalValue { get; set; } 
 
     public override void RestoreNutritionalValue()
     {

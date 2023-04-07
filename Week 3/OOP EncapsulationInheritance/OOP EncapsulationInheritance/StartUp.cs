@@ -14,7 +14,8 @@ public class StartUp
         IBehaviour behaviour = new Behaviour.Behaviour();
 
         int numberOfElementsForEachType = 2;
-        Map map = new Map(2, rnd, numberOfElementsForEachType);
+        int mapSize = 3;
+        Map map = new Map(mapSize, rnd, numberOfElementsForEachType);
 
         Simulation simulation = new Simulation(rnd, statistics, map, writer, getDetailedStatistics, behaviour);
 

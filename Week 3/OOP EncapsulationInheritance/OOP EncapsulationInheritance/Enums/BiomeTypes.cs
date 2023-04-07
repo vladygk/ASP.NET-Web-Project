@@ -3,6 +3,7 @@
     public enum BiomeTypes
     {
         ForestBiome,
-        OceanBiome
+        OceanBiome,
+        DessertBiome
     }
 
