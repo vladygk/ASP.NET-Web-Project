@@ -5,6 +5,8 @@ CREATE TABLE Product(
     maker CHAR(1),
     model CHAR(4),
     [type] VARCHAR(7)
+
+    
 );
 
 CREATE TABLE Printer(
