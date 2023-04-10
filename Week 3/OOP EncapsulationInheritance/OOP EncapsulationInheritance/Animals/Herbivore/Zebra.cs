@@ -7,8 +7,8 @@ using Enums;
 public class Zebra : Herbivore
 {
     private static readonly IDiet _diet = new Diet(
-        new HashSet<IEatableTypes>() { IEatableTypes.Vegetable, IEatableTypes.Fruit },
-        new HashSet<IEatableTypes>() { IEatableTypes.Fruit });
+        new HashSet<IEatableTypes>() { IEatableTypes.Vegetable, IEatableTypes.Fruit, IEatableTypes.Cactus },
+        new HashSet<IEatableTypes>() { IEatableTypes.Fruit, IEatableTypes.Cactus });
 
     public Zebra(IBiome startBiome, Map map, Random rnd)
         : base(_diet, startBiome, map, rnd)

@@ -15,5 +15,6 @@ public enum IEatableTypes
     IceCream,
     Pizza,
     Seaweed,
+    Cactus
 }
 
