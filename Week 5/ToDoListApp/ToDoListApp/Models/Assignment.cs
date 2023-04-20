@@ -21,6 +21,5 @@ public  class Assignment
     [DisplayName("Assigned to")]
     public string AssignedTo { get; set; } = null!;
 
-    [InverseProperty("Assignment")]
-    public virtual ICollection<ToDoTask> ToDoTasks { get; set; } = new List<ToDoTask>();
+    [InverseProperty("Assignment")] public virtual ICollection<ToDoTask> ToDoTasks { get; set; } = null!;
 }

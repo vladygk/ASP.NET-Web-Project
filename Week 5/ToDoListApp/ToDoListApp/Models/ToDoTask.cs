@@ -23,9 +23,12 @@ public  class ToDoTask
     [Unicode(false)]
     public string Description { get; set; } = null!;
 
-    public int? AssignmentId { get; set; }
+    public int AssignmentId { get; set; }
 
     [ForeignKey("AssignmentId")]
     [InverseProperty("ToDoTasks")]
-    public virtual Assignment? Assignment { get; set; }
+    public virtual Assignment Assignment { get; set; }
+
+
+   
 }

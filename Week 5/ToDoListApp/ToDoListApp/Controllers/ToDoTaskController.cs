@@ -1,47 +1,52 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ToDoListApp.Context;
 using ToDoListApp.Models;
+using ToDoListApp.Services;
 
 namespace ToDoListApp.Controllers
 {
     public class ToDoTaskController : Controller
     {
-        private readonly TodoListAppContext _db;
 
-        public ToDoTaskController(TodoListAppContext db)
+        private readonly ITodoListService _todoListService;
+
+        public ToDoTaskController(ITodoListService todoListService)
         {
-            _db = db;
+
+            _todoListService = todoListService;
         }
+
+        [HttpGet]
         public IActionResult Index()
         {
-            var tasks = _db.ToDoTasks.ToList();
+            var tasks = _todoListService.GetAllTasks();
 
             return View(tasks);
         }
 
-        //GET
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        //POST
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ToDoTask task)
         {
+            if (task == null )
+            {
+                return BadRequest();
+            }
+            await _todoListService.CreateTask(task);
 
-            _db.ToDoTasks.Add(task);
-
-            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        //GET
+        [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
-            var taskToEdit = await _db.ToDoTasks.FindAsync(Id);
+            var taskToEdit = await _todoListService.GetOne(Id);
+
             if (taskToEdit == null)
             {
                 return NotFound();
@@ -51,34 +56,36 @@ namespace ToDoListApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      
         public async Task<IActionResult> Edit(ToDoTask task)
         {
 
-            if (ModelState.IsValid)
+            if (task == null )
             {
-                _db.ToDoTasks.Update(task);
+                return BadRequest();
             }
 
-            await _db.SaveChangesAsync();
+            await _todoListService.UpdateOne(task);
 
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Delete(int Id)
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            var taskToDelete = await _db.ToDoTasks.FindAsync(Id);
-            if (taskToDelete == null)
+            var taskToDelete = await _todoListService.GetOne(id);
+
+            if (taskToDelete == null )
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            _db.Remove(taskToDelete);
-            await _db.SaveChangesAsync();
+            await _todoListService.DeleteOne(taskToDelete);
 
             return RedirectToAction("Index");
         }
 
-      
+
     }
 }

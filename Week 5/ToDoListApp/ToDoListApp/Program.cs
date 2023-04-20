@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoListApp.Context;
+using ToDoListApp.Services;
 
 namespace ToDoListApp
 {
@@ -15,6 +16,10 @@ namespace ToDoListApp
                 builder.Configuration.GetConnectionString("DefaultConnection")
 
             ).UseLazyLoadingProxies());
+
+            builder.Services.AddScoped<ITodoListService, TodoListService>();
+                
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
