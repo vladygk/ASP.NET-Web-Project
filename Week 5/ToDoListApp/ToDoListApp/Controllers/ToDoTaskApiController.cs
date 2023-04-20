@@ -7,7 +7,7 @@ using ToDoListApp.Services;
 namespace ToDoListApp.Controllers
 {
 
-  
+
 
     [Route("api/")]
     [ApiController]
@@ -31,11 +31,13 @@ namespace ToDoListApp.Controllers
             _todoListService = todoListService;
         }
 
-        
+
         [HttpGet("get")]
         public IActionResult Get()
         {
             var tasks = _todoListService.GetAllTasks();
+
+
             var tasksDtos = tasks.Select(t => new ExportTodoTaskDto(t));
 
             return Ok(tasksDtos);
@@ -60,7 +62,7 @@ namespace ToDoListApp.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create()
         {
-            
+
             var jsonBody = await GetBody();
 
             ImportTodoTaskDto taskDto = JsonConvert.DeserializeObject<ImportTodoTaskDto>(jsonBody)!;
@@ -78,7 +80,7 @@ namespace ToDoListApp.Controllers
                 }
             };
 
-           await _todoListService.CreateTask(task);
+            await _todoListService.CreateTask(task);
 
             return Ok();
         }
@@ -88,7 +90,12 @@ namespace ToDoListApp.Controllers
         {
             string jsonBody = await GetBody();
 
-          var toEdit = await  _todoListService.GetOne(id);
+            var toEdit = await _todoListService.GetOne(id);
+
+            if (toEdit == null)
+            {
+                return NotFound();
+            }
 
             ImportTodoTaskDto taskDto = JsonConvert.DeserializeObject<ImportTodoTaskDto>(jsonBody)!;
 
@@ -96,7 +103,7 @@ namespace ToDoListApp.Controllers
             toEdit.Description = taskDto.Description == toEdit.Description ? toEdit.Description : taskDto.Description;
             toEdit.Done = taskDto.Done == toEdit.Done ? toEdit.Done : taskDto.Done;
 
-            toEdit.CreatedOn = DateTime.Parse( taskDto.CreatedOn) == toEdit.CreatedOn ? toEdit.CreatedOn : DateTime.Parse(taskDto.CreatedOn);
+            toEdit.CreatedOn = DateTime.Parse(taskDto.CreatedOn) == toEdit.CreatedOn ? toEdit.CreatedOn : DateTime.Parse(taskDto.CreatedOn);
 
             toEdit.Assignment.AssignedTo = taskDto.AssignedTo == toEdit.Assignment.AssignedTo ? toEdit.Assignment.AssignedTo : taskDto.AssignedTo;
 
@@ -105,7 +112,7 @@ namespace ToDoListApp.Controllers
 
             await _todoListService.UpdateOne(toEdit);
 
-           return Ok();
+            return Ok();
         }
 
         [HttpDelete("delete/{id}")]
@@ -113,15 +120,17 @@ namespace ToDoListApp.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var toDelete = await _todoListService.GetOne(id);
+
             
+
             if (toDelete == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             await _todoListService.DeleteOne(toDelete);
 
-            
+
 
             return NoContent();
         }
