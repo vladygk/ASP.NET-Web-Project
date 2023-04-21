@@ -1,0 +1,23 @@
+version: "2.17.2"
+
+services:
+    api:
+        container_name: api
+        build:
+          context: .
+          dockerfile: ./ToDoListApp/Dockerfile
+        ports:
+          - "8080:80"
+        depends_on:
+          - db
+
+    db:
+        container_name: db
+        image: "mcr.microsoft.com/mssql/server:2022-latest"
+        ports:
+          - "1435:1433"
+
+        environment:
+            
+            SA_PASSWORD: "12345Aa!"
+            ACCEPT_EULA: "Y"
